@@ -8,12 +8,24 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.Scanner;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+
+import modelo.Planta;
 
 public class Principal {
 
 	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		System.out.println("Dame el codigo de la nueva Planta:");
+		String codigo = in.nextLine().trim().toUpperCase();
+		System.out.println("Dame el nombre común de la nueva planta");
+		String nombre_comun = in.nextLine();
+		System.out.println("Dame el nombre cientifico de la nueva planta");
+		String nombre_cientifico = in.nextLine();
+		
+		Planta nueva = new Planta(codigo, nombre_comun, nombre_cientifico);
 		Connection con;
 		MysqlDataSource m = new MysqlDataSource();
 		Properties prop= null;
@@ -21,6 +33,7 @@ public class Principal {
 		String url = "jdbc:mysql://localhost:3306/basededatos";
 		String usuario = "root";
 		String password = "";
+		System.out.println("");
 		try {
 			con = DriverManager.getConnection(url, usuario, password);
 			fis = new FileInputStream("src/main/resources/db.properties");
@@ -33,7 +46,7 @@ public class Principal {
 			m.setPassword("password");
 			con = m.getConnection();
 			
-			String sql = "INSERT INTO plantas(codigo, nombrecomun, nombrecientifico) VALUES ('"+nueva.getCodigo() + "', '"nueva.getNombrecomun() + "' , '"nueva.getNombreCientifico();
+			String sql = "INSERT INTO plantas(codigo, nombrecomun, nombrecientifico) VALUES ('"+nueva.getCodigo()+"' , '"+nueva.getNombrecomun()+"', '"+nueva.getNombrecientifico()+"')";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.execute();
 			con.close();
