@@ -45,11 +45,17 @@ public class Principal {
 			m.setUser(usuario);
 			m.setPassword("password");
 			con = m.getConnection();
-			
-			String sql = "INSERT INTO plantas(codigo, nombrecomun, nombrecientifico) VALUES ('"+nueva.getCodigo()+"' , '"+nueva.getNombrecomun()+"', '"+nueva.getNombrecientifico()+"')";
+	
+			String sql = "INSERT INTO plantas(codigo, nombrecomun, nombrecientifico) VALUES (?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, nueva.getCodigo());
+			ps.setString(2, nueva.getNombrecomun());
+			ps.setString(3, nueva.getNombrecientifico());
+			
 			ps.execute();
+			ps.close();
 			con.close();
+			
 		}
 		catch(SQLException e) {
 			System.out.println(e.getLocalizedMessage());
