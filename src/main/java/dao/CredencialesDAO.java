@@ -1,23 +1,61 @@
 package dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.util.Collection;
 
 import modelo.Credenciales;
-import modelo.Ejemplar;
-import modelo.Persona;
+import modelo.Planta;
 
-//Interfaz CredencialesDAO donde se definen los métodos que se van a emplear para las operaciones CRUD
-//El desarrollo de estos métodos se harán en las clases DAOImpl
-public interface CredencialesDAO {
-	//Insertar una credencial
-		int insertar(Credenciales c);
-	//Modificar una credencial
-		int modificar(Credenciales c);
-	//Eliminar una credencial
-		int eliminar(Credenciales c);
-		
-		Credenciales findById(int id);
-		ArrayList<Credenciales> findByNombre(String nombre);
-		List<Credenciales> findAll();
+public class CredencialesDAO implements OperacionesCRUD<Credenciales> {
+	Connection conex;
+
+
+	public CredencialesDAO(Connection conex) {
+		if (this.conex == null)
+			this.conex = conex;
 	}
+
+
+	@Override
+	public boolean insertarConID(Credenciales elemento) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public long insertarSinID(Credenciales elemento) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public Credenciales buscarPorID(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Collection<Credenciales> buscarTodos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public boolean modificar(Credenciales elemento) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean eliminar(Credenciales elemento) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+}

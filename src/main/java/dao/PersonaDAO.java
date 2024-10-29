@@ -1,22 +1,63 @@
 package dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.util.Collection;
 
 import modelo.Ejemplar;
 import modelo.Persona;
 
-//Interfaz PersonaDAO donde se definen los métodos que se van a emplear para las operaciones CRUD
-//El desarrollo de estos métodos se harán en las clases DAOImpl
-public interface PersonaDAO {
-	//Insertar una persona
-		int insertar(Persona p);
-	//Modificar una persona
-		int modificar(Persona p);
-	//Eliminar una persona
-		int eliminar(Persona p);
-		Persona findById(int id);
-		
-		ArrayList<Persona> findByNombre(String nombre);
-		List<Persona> findAll();
+public class PersonaDAO implements OperacionesCRUD<Persona> {
+	Connection conex;
+
+
+	public PersonaDAO(Connection conex) {
+		if (this.conex == null)
+			this.conex = conex;
 	}
+	
+
+	@Override
+	public boolean insertarConID(Persona elemento) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public long insertarSinID(Persona elemento) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+	@Override
+	public boolean modificar(Persona elemento) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean eliminar(Persona elemento) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public Persona buscarPorID(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Collection<Persona> buscarTodos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
+

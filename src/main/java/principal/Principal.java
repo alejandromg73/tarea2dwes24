@@ -16,16 +16,10 @@ import modelo.Planta;
 
 public class Principal {
 
-	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
-		System.out.println("Dame el codigo de la nueva Planta:");
-		String codigo = in.nextLine().trim().toUpperCase();
-		System.out.println("Dame el nombre común de la nueva planta");
-		String nombre_comun = in.nextLine();
-		System.out.println("Dame el nombre cientifico de la nueva planta");
-		String nombre_cientifico = in.nextLine();
+	public static void main(String[] args){
 		
-		Planta nueva = new Planta(codigo, nombre_comun, nombre_cientifico);
+		
+		
 		Connection con;
 		MysqlDataSource m = new MysqlDataSource();
 		Properties prop= null;

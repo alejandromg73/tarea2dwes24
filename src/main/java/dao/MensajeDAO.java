@@ -1,23 +1,61 @@
 package dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.util.Collection;
 
-import modelo.Credenciales;
-import modelo.Ejemplar;
 import modelo.Mensaje;
+import modelo.Planta;
 
-//Interfaz MensajeDAO donde se definen los métodos que se van a emplear para las operaciones CRUD
-//El desarrollo de estos métodos se harán en las clases DAOImpl
-public interface MensajeDAO {
-	//Insertar un mensaje
-		int insertar(Mensaje c);
-	//Modificar un mensaje
-		int modificar(Mensaje c);
-	//Eliminar un mensaje
-		int eliminar(Mensaje c);
-		
-		Mensaje findById(int id);
-		ArrayList<Mensaje> findByNombre(String nombre);
-		List<Mensaje> findAll();
+public class MensajeDAO implements OperacionesCRUD<Mensaje> {
+	Connection conex;
+
+
+	public MensajeDAO(Connection conex) {
+		if (this.conex == null)
+			this.conex = conex;
 	}
+
+
+	@Override
+	public boolean insertarConID(Mensaje elemento) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public long insertarSinID(Mensaje elemento) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public Mensaje buscarPorID(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Collection<Mensaje> buscarTodos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public boolean modificar(Mensaje elemento) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean eliminar(Mensaje elemento) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+}

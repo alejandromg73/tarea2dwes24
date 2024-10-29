@@ -1,22 +1,60 @@
 package dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.util.Collection;
 
 import modelo.Ejemplar;
 import modelo.Planta;
 
-//Interfaz EjemplarDAO donde se definen los métodos que se van a emplear para las operaciones CRUD
-//El desarrollo de estos métodos se harán en las clases DAOImpl
-public interface EjemplarDAO {
-	//Insertar un ejemplar
-		int insertar(Ejemplar e);
-	//Modificar un ejemplar
-		int modificar(Ejemplar e);
-	//Eliminar un ejemplar
-		int eliminar(Ejemplar e);
+	public class EjemplarDAO implements OperacionesCRUD<Ejemplar> {
+		Connection conex;
+
+
+		public EjemplarDAO(Connection conex) {
+			if (this.conex == null)
+				this.conex = conex;
+		}
 		
-		Ejemplar findById(int id);
-		ArrayList<Ejemplar> findByNombre(String nombre);
-		List<Ejemplar> findAll();
-	}
+		
+
+		@Override
+		public boolean insertarConID(Ejemplar elemento) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public long insertarSinID(Ejemplar elemento) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public boolean modificar(Ejemplar elemento) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean eliminar(Ejemplar elemento) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+
+
+		@Override
+		public Ejemplar buscarPorID(long id) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+
+		@Override
+		public Collection<Ejemplar> buscarTodos() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+}
+
