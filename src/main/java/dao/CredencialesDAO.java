@@ -9,26 +9,11 @@ import modelo.Planta;
 public class CredencialesDAO implements OperacionesCRUD<Credenciales> {
 	Connection conex;
 
-
-	public CredencialesDAO(Connection conex) {
-		if (this.conex == null)
-			this.conex = conex;
-	}
-
-
 	@Override
-	public boolean insertarConID(Credenciales elemento) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public long insertarSinID(Credenciales elemento) {
+	public long insertar(Credenciales elemento) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 
 	@Override
 	public Credenciales buscarPorID(long id) {
@@ -36,13 +21,11 @@ public class CredencialesDAO implements OperacionesCRUD<Credenciales> {
 		return null;
 	}
 
-
 	@Override
-	public Collection<Credenciales> buscarTodos() {
+	public Collection<Credenciales> verTodos() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public boolean modificar(Credenciales elemento) {
@@ -50,12 +33,14 @@ public class CredencialesDAO implements OperacionesCRUD<Credenciales> {
 		return false;
 	}
 
-
 	@Override
 	public boolean eliminar(Credenciales elemento) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
+	
 	
 	
 }
