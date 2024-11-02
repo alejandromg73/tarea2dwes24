@@ -12,55 +12,43 @@ import java.util.Scanner;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
+import fachada.ViveroFachada;
 import modelo.Planta;
 
 public class Principal {
 
 	public static void main(String[] args){
+		ViveroFachada portal = ViveroFachada.getPortal();
+		Scanner in = new Scanner(System.in);
+		System.out.println("GESTIÓN DEL VIVERO");
+		int opcion = 0;
+		do {
+			portal.menuPrincipal();
+			opcion = in.nextInt();
+			if (opcion < 1 || opcion > 8) {
+				System.out.println("Opcion no válida.");
+				continue;
+			}
+			switch (opcion) {
+			case 1:
+				portal.menuPrincipalPlantas();
+				break;
+			case 2:
+				portal.menuPrincipalEjemplares();
+				break;
+			case 3:
+				portal.menuPrincipalMensajes();
+				break;
+			case 4:
+				portal.menuPrincipalPersonas();
+				break;
+			}
+		} while (opcion != 5);
+		System.out.println("Fin del programa");
+	}
 		
-		
-		
-		Connection con;
-		MysqlDataSource m = new MysqlDataSource();
-		Properties prop= null;
-		FileInputStream fis;
-		String url = "jdbc:mysql://localhost:3306/basededatos";
-		String usuario = "root";
-		String password = "";
-		System.out.println("");
-		try {
-			con = DriverManager.getConnection(url, usuario, password);
-			fis = new FileInputStream("src/main/resources/db.properties");
-			prop.load(fis);
-			url = prop.getProperty("url");
-			usuario = prop.getProperty("usuario");
-			password = prop.getProperty("password");
-			m.setUrl(url);
-			m.setUser(usuario);
-			m.setPassword("password");
-			con = m.getConnection();
-	
-			String sql = "INSERT INTO plantas(codigo, nombrecomun, nombrecientifico) VALUES (?,?,?)";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, nueva.getCodigo());
-			ps.setString(2, nueva.getNombrecomun());
-			ps.setString(3, nueva.getNombrecientifico());
-			
-			ps.execute();
-			ps.close();
-			con.close();
-			
-		}
-		catch(SQLException e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-		catch(FileNotFoundException e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-		catch(IOException e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-
 	}
 
-}
+		
+		
+	
