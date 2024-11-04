@@ -20,7 +20,6 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 
 
 	public MensajeDAO(Connection conex) {
-		if (this.conex == null)
 			this.conex = conex;
 	}
 
@@ -44,7 +43,7 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<Mensaje> buscarPorID(long idEjemplar) {
+	public Mensaje buscarPorID(long idEjemplar) {
 		ArrayList mensajes = new ArrayList<Mensaje>();
 		String consulta = "SELECT mensajes.id, mensajes.fechahora, mensajes.mensaje, " +
                 "personas.id, personas.nombre, personas.email " +

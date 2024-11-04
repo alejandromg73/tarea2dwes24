@@ -18,7 +18,6 @@ public class PlantaDAO implements OperacionesCRUD<Planta> {
 
 
 		public PlantaDAO(Connection conex) {
-			if (this.conex == null)
 				this.conex = conex;
 		}
 

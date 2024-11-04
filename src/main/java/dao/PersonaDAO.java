@@ -16,20 +16,18 @@ public class PersonaDAO implements OperacionesCRUD<Persona> {
 
 
 	public PersonaDAO(Connection conex) {
-		if (this.conex == null)
+		
 			this.conex = conex;
 	}
 
 
 	@Override
-	public long insertar(Persona p) {
+	public long insertar(Persona pers) {
 		try {
-			ps = conex.prepareStatement("INSERT INTO personas (id, nombre, email, id_credenciales) values (?,?,?)");
-			ps.setLong(1, p.getId());
-			ps.setString(2, p.getNombre());
-			ps.setString(3, p.getEmail());
-			ps.setLong(4, p.getIdCredencial());
-			
+			ps = conex.prepareStatement("INSERT INTO personas (id, nombre, email) values (?,?,?)");
+			ps.setLong(1, pers.getId());
+			ps.setString(2, pers.getNombre());
+			ps.setString(3, pers.getEmail());
 			return ps.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("Error al insertar en plantas " + e.getMessage());
@@ -54,14 +52,14 @@ public class PersonaDAO implements OperacionesCRUD<Persona> {
 
 
 	@Override
-	public boolean modificar(Persona elemento) {
+	public boolean modificar(Persona pers) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 
 	@Override
-	public boolean eliminar(Persona elemento) {
+	public boolean eliminar(Persona pers) {
 		// TODO Auto-generated method stub
 		return false;
 	}

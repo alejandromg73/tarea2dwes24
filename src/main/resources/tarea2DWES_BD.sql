@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-10-2024 a las 13:48:06
+-- Tiempo de generación: 04-11-2024 a las 10:53:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,7 +32,8 @@ USE `tarea2dwes24`;
 CREATE TABLE `credenciales` (
   `id` int(11) NOT NULL,
   `usuario` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(50) NOT NULL,
+  `idPersona` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -70,8 +71,7 @@ CREATE TABLE `mensajes` (
 CREATE TABLE `personas` (
   `id` int(11) NOT NULL,
   `nombre` varchar(40) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `id_credenciales` int(11) NOT NULL
+  `email` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -95,21 +95,22 @@ CREATE TABLE `plantas` (
 --
 ALTER TABLE `credenciales`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `usuario` (`usuario`);
+  ADD UNIQUE KEY `usuario` (`usuario`),
+  ADD KEY `fk_personas` (`idPersona`);
 
 --
 -- Indices de la tabla `ejemplares`
 --
 ALTER TABLE `ejemplares`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_planta` (`id_planta`);
+  ADD KEY `fk_plantas` (`id_planta`);
 
 --
 -- Indices de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_ejemplar` (`idejemplar`),
+  ADD KEY `fk_ejemplares` (`idejemplar`),
   ADD KEY `fk_persona` (`idpersona`);
 
 --
@@ -117,8 +118,7 @@ ALTER TABLE `mensajes`
 --
 ALTER TABLE `personas`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD KEY `fk_credenciales` (`id_credenciales`);
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indices de la tabla `plantas`
@@ -159,23 +159,23 @@ ALTER TABLE `personas`
 --
 
 --
+-- Filtros para la tabla `credenciales`
+--
+ALTER TABLE `credenciales`
+  ADD CONSTRAINT `fk_personas` FOREIGN KEY (`idPersona`) REFERENCES `personas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `ejemplares`
 --
 ALTER TABLE `ejemplares`
-  ADD CONSTRAINT `fk_planta` FOREIGN KEY (`id_planta`) REFERENCES `plantas` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_plantas` FOREIGN KEY (`id_planta`) REFERENCES `plantas` (`codigo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
-  ADD CONSTRAINT `fk_ejemplar` FOREIGN KEY (`idejemplar`) REFERENCES `ejemplares` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_ejemplares` FOREIGN KEY (`idejemplar`) REFERENCES `ejemplares` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_persona` FOREIGN KEY (`idpersona`) REFERENCES `personas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `personas`
---
-ALTER TABLE `personas`
-  ADD CONSTRAINT `fk_credenciales` FOREIGN KEY (`id_credenciales`) REFERENCES `credenciales` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
