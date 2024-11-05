@@ -25,10 +25,6 @@ public ServiciosPlanta() {
 	public boolean modificar(Planta p) {
 		return plantaDAO.modificar(p);
 	}
-
-	public boolean eliminar(Planta p) {
-		return plantaDAO.eliminar(p);
-	}
 	
 	public Collection<Planta> verTodos(){
 		return plantaDAO.verTodos();
@@ -36,4 +32,14 @@ public ServiciosPlanta() {
 	public Planta buscarPorID(long id) {
 		return plantaDAO.buscarPorID(id);
 	}
+	
+	public static boolean validarPlanta(Planta p) {
+        boolean ret = false;
+        if(p.getCodigo().isEmpty()) 
+        	return false;
+        if(p.getCodigo().length()<3 || p.getCodigo().length()>20)
+        	return false;
+        
+        return true;
+    }
 }

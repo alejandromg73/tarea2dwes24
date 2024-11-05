@@ -29,7 +29,7 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 		try {
 			ps = conex.prepareStatement("INSERT INTO mensajes (id, fechahora, mensaje, idejemplar, idpersona) values (?,?,?,?,?)");
 			ps.setLong(1, m.getId());
-			ps.setLocalDateTime(2, m.getFechaHora());
+			ps.setDate(2, m.getFechaHora().toLocalDate());
 			ps.setString(3, m.getMensaje());
 			ps.setLong(4, m.getIdEjemplar());
 			ps.setLong(5, m.getIdPersona());
@@ -59,9 +59,7 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 		Persona persona = new Persona(
 		rs.getLong("id"),
 		rs.getString("nombre"),
-		rs.getString("email"),
-		rs.getLong("id_credenciales")
-		);
+		rs.getString("email"));
 		Mensaje mensaje = new Mensaje(
 		rs.getLong("id"), 
 		rs.getTimestamp("fechahora").toLocalDateTime(), 
@@ -119,12 +117,7 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 	}
 
 
-	@Override
-	public boolean eliminar(Mensaje elemento) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 
 	
 	

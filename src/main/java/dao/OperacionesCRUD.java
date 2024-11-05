@@ -12,6 +12,6 @@ public interface OperacionesCRUD<T> {
 	//CU4B
 	public boolean modificar(T elemento);
 	
-	public boolean eliminar(T elemento);
+	
 
 }

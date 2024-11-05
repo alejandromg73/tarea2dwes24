@@ -1,46 +1,44 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 
 import modelo.Credenciales;
 import modelo.Planta;
 
-public class CredencialesDAO implements OperacionesCRUD<Credenciales> {
+public class CredencialesDAO {
 	Connection conex;
+	private PreparedStatement ps;
+	private ResultSet rs;
 
-	@Override
-	public long insertar(Credenciales elemento) {
-		// TODO Auto-generated method stub
-		return 0;
+
+	public CredencialesDAO(Connection conex) {
+			this.conex = conex;
+	}
+	
+	public boolean autenticar (String usuario, String password) {
+		        String consulta = "SELECT COUNT(*) FROM credenciales WHERE usuario = ? AND contrasena = ?";
+		        try (PreparedStatement ps= conex.prepareStatement(consulta)) {
+		            ps.setString(1, usuario);
+		            ps.setString(2, password);
+		            ResultSet rs = ps.executeQuery();
+		            if (rs.next()) {
+		                return true;
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		        return false; 
+	}
+	
 	}
 
-	@Override
-	public Credenciales buscarPorID(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public Collection<Credenciales> verTodos() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean modificar(Credenciales elemento) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean eliminar(Credenciales elemento) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 
 	
 	
 	
-}

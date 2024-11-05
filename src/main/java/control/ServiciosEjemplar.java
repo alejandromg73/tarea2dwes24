@@ -28,9 +28,6 @@ public ServiciosEjemplar() {
 		return ejemplarDAO.modificar(e);
 	}
 
-	public boolean eliminar(Ejemplar e) {
-		return ejemplarDAO.eliminar(e);
-	}
 	
 	public Collection<Ejemplar> verTodos(){
 		return ejemplarDAO.verTodos();
@@ -38,4 +35,14 @@ public ServiciosEjemplar() {
 	public Ejemplar buscarPorID(long id) {
 		return ejemplarDAO.buscarPorID(id);
 	}
+	public static boolean validarEjemplar(Ejemplar e) {
+        boolean ret = false;
+        if(e.getCodigoPlanta().isEmpty()) 
+        	return false;
+        if(e.getCodigoPlanta().length()<3 || e.getCodigoPlanta().length()>20)
+        return false;
+        
+        return true;
+    }
+	
 }

@@ -58,12 +58,6 @@ public class PersonaDAO implements OperacionesCRUD<Persona> {
 	}
 
 
-	@Override
-	public boolean eliminar(Persona pers) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
 
 	
 }

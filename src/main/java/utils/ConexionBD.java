@@ -10,6 +10,7 @@ import java.util.Properties;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
+import dao.CredencialesDAO;
 import dao.EjemplarDAO;
 import dao.MensajeDAO;
 import dao.PersonaDAO;
@@ -30,7 +31,6 @@ public class ConexionBD {
 		Properties prop = new Properties();
 		MysqlDataSource m = new MysqlDataSource();
 		FileInputStream fis;
-
 		try {
 			fis = new FileInputStream("src/main/resources/db.properties");
 			prop.load(fis);
@@ -79,6 +79,9 @@ public class ConexionBD {
 
 	public MensajeDAO getMensajeDAO() {
 		return new MensajeDAO(con);
+	}
+	public CredencialesDAO getCredencialesDAO() {
+		return new CredencialesDAO(con);
 	}
 
 	

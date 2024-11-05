@@ -24,9 +24,7 @@ public ServiciosMensaje() {
 		return mensajeDAO.modificar(m);
 	}
 
-	public boolean eliminar(Mensaje m) {
-		return mensajeDAO.eliminar(m);
-	}
+	
 	
 	public Collection<Mensaje> verTodos(){
 		return mensajeDAO.verTodos();

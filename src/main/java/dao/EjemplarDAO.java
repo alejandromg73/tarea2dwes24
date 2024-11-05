@@ -101,19 +101,7 @@ import utils.ConexionBD;
 		}
 
 
-		@Override
-		public boolean eliminar(Ejemplar ej) {
-			String consulta = "DELETE FROM ejemplares WHERE id = ?";
-		    try {
-		        ps = conex.prepareStatement(consulta);
-		        ps.setLong(1, ej.getId());
-		        return ps.executeUpdate() > 0;
-		    } catch (SQLException e) {
-		        System.out.println("Error al eliminar la planta: " + e.getMessage());
-		        e.printStackTrace();
-		    }
-		    return false;
-		}
+		
 		
 		
 
