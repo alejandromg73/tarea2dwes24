@@ -17,41 +17,19 @@ import control.Controlador;
 import control.ServiciosCredenciales;
 import control.ServiciosPersona;
 import control.ServiciosPlanta;
-import fachada.ViveroFachada;
+import vista.FachadaInvitado;
 import modelo.Planta;
 
 public class Principal {
-	private static Controlador controlador=Controlador.getServicios();
+    public static void main(String[] args) {
+    	FachadaInvitado portalInvitado = FachadaInvitado.getPortalInvitado();
+    	
+        portalInvitado.menuInvitado();
+    }
+}
+		
+		
 
-	public static void main(String[] args){
-		ViveroFachada portal = ViveroFachada.getPortal();
-		Scanner in = new Scanner(System.in);
-		System.out.println("GESTIÓN DEL VIVERO");
-		int opcion = 0;
-		do {
-			FachadaInvitado.menuInvitado();
-			opcion = in.nextInt();
-			if (opcion < 1 || opcion > 3) {
-				System.out.println("Opcion no válida.");
-				continue;
-			}
-			switch (opcion) {
-			case 1:
-				FachadaAdmin.verTodasPlantas();
-				break;
-			case 2:
-				FachadaInvitado.login();
-				break;
-			}
-		} while (opcion != 3);
-		System.out.println("Fin del programa");
-	}
-		
-		
-		
-		
-		
-		}
 		
 	
 

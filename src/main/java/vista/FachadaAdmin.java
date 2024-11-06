@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import control.Controlador;
 import modelo.Ejemplar;
+import modelo.Mensaje;
 import modelo.Persona;
 import modelo.Planta;
 import utils.ConexionBD;
@@ -22,9 +23,11 @@ public class FachadaAdmin {
     }
     private Controlador controlador = Controlador.getServicios();
     Scanner in = new Scanner(System.in);
+    
     public void menuAdmin() {
         int opcion = 0;
         do {
+        	System.out.println("------MENÚ DE ADMINISTRADOR------");
             System.out.println("Selecciona una opción:");
             System.out.println("1. Gestión de plantas.");
             System.out.println("2. Gestión de ejemplares.");
@@ -146,7 +149,7 @@ public class FachadaAdmin {
             	//nuevaPersona();
                 break;
             case 2:
-                //verTodasPersonas();
+                verTodasPersonas();
                 break;
             
         }
@@ -192,7 +195,7 @@ public class FachadaAdmin {
         }
         switch (opcion) {
             case 1:
-            	//verTodosMensajes();
+            	verTodosMensajes();
                 break;
             case 2:
                 //VerMensajesPersona();
@@ -291,6 +294,80 @@ public class FachadaAdmin {
             System.out.println("Error al insertar la persona nueva: " + ex.getMessage());
         }
         return pers;
+    }
+    public void verTodasPersonas() {
+        ArrayList<Persona> personas = (ArrayList<Persona>) controlador.getServiciosPersona().verTodos();
+        if (personas == null || personas.isEmpty()) {
+            System.out.println("Lo siento, no hay personas para mostrar en la base de datos.");
+            return;
+        }
+        System.out.println("Todas las personas: ");
+        for (Persona pers : personas) {
+            System.out.println(pers);
+        }
+    }
+    public void verTodosMensajes() {
+        ArrayList<Mensaje> mensajes = (ArrayList<Mensaje>) controlador.getServiciosMensaje().verTodos();
+        if (mensajes == null || mensajes.isEmpty()) {
+            System.out.println("Lo siento, no hay mensajes para mostrar en la base de datos.");
+            return;
+        }
+        System.out.println("Todos los mensajes: ");
+        for (Mensaje m: mensajes) {
+            System.out.println(m);
+        }
+    }
+    
+    public void modificarNombreComun() {
+    	    boolean valido = false;
+    	    String codigo = "";
+    	    
+    	    do {
+    	        System.out.print("Introduce el código de la planta de la que quieres modificar el nombre común: ");
+    	        codigo = in.nextLine().trim().toUpperCase();
+    	        valido = controlador.getServiciosPlanta().validarCodigo(codigo);
+    	        if (valido==false) {
+    	            System.out.println("El código de la planta que has introducido no es válido");
+    	        }
+    	    } while (valido==false);
+    	    System.out.print("Introduce el nuevo nombre común de la planta: ");
+    	    String nuevoNombreComun = in.nextLine().trim();
+    	    try {
+    	        boolean nuevo = controlador.getServiciosPlanta().actualizarNombreComun(codigo, nuevoNombreComun);
+    	        if (nuevo) {
+    	            System.out.println("El nombre común de la planta con código " + codigo + "ha sido actualizado, ahora el nombre es" + nuevoNombreComun);
+    	        } else {
+    	            System.out.println("Error al intentar actualizar el nombre común");
+    	        }
+    	    } catch (Exception ex) {
+    	        System.out.println("Error al actualizar el nombre común: " + ex.getMessage());
+    	    }
+    }
+    
+    public void modificarNombrecientifico() {
+    	boolean valido = false;
+	    String codigo = "";
+	    do {
+	        System.out.print("Introduce el código de la planta de la que quieres modificar el nombre científico: ");
+	        codigo = in.nextLine().trim().toUpperCase();
+	        valido = controlador.getServiciosPlanta().validarCodigo(codigo);
+	        if (valido==false) {
+	            System.out.println("El código de la planta que has introducido no es válido");
+	        }
+	    } while (valido==false);
+	    System.out.print("Introduce el nuevo nombre común de la planta: ");
+	    String nuevoNombreComun = in.nextLine().trim();
+	    try {
+	        boolean nuevo = controlador.getServiciosPlanta().actualizarNombreComun(codigo, nuevoNombreComun);
+	        if (nuevo) {
+	            System.out.println("El nombre común de la planta con código " + codigo + "ha sido actualizado, ahora el nombre es" + nuevoNombreComun);
+	        } else {
+	            System.out.println("Error al intentar actualizar el nombre común");
+	        }
+	    } catch (Exception ex) {
+	        System.out.println("Error al actualizar el nombre común: " + ex.getMessage());
+	    }
+
     }
 }
 

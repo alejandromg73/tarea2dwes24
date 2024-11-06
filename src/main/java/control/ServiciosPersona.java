@@ -31,5 +31,15 @@ public class ServiciosPersona {
 		public Persona buscarPorID(long id) {
 			return personaDAO.buscarPorID(id);
 		}
+		public boolean validarPersona(Persona pers) {
+	        boolean ret = false;
+	        if(p.getCodigo().isEmpty()) 
+	        	return false;
+	        if(p.getCodigo().length()<3 || p.getCodigo().length()>20)
+	        	return false;
+	        
+	        return true;
+	    }
+
 }
 

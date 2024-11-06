@@ -21,9 +21,11 @@ public class FachadaInvitado {
     }
     private Controlador controlador = Controlador.getServicios();
     private Scanner in = new Scanner(System.in);
+    
     public void menuInvitado() {
         int opcion = 0;
         do {
+        	System.out.println("------GESTIÓN DEL VIVERO------");
             System.out.println("1. VER TODAS LAS PLANTAS");
             System.out.println("2. LOGUEARSE");
             System.out.println("3. SALIR DEL PROGRAMA");
@@ -37,7 +39,7 @@ public class FachadaInvitado {
                     login();
                     break;
                 case 3:
-                    System.out.println("Saliendo del programa...");
+                    System.out.println("Saliendo del programa");
                     break;
                 default:
                     System.out.println("Opción incorrecta. Por favor, intenta de nuevo.");
@@ -53,9 +55,11 @@ public class FachadaInvitado {
         if (autenticar) {
             System.out.println("Has iniciado sesión como " + usuario);
             if (usuario.equalsIgnoreCase("admin")) {
-                FachadaAdmin.getPortalAdmin().menuAdmin(); 
+                FachadaAdmin.getPortalAdmin().menuAdmin();
+                System.out.println("Eres el usuario administrador");
             } else {
-                FachadaPersonal.getPortalPersonal().menuPersonal(); 
+                FachadaPersonal.getPortalPersonal().menuPersonal();
+                System.out.println("Eres un usuario del personal del vivero");
             }
         } else {
             System.out.println("Usuario o contraseña incorrectos.");

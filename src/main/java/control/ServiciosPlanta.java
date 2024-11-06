@@ -33,7 +33,7 @@ public ServiciosPlanta() {
 		return plantaDAO.buscarPorID(id);
 	}
 	
-	public static boolean validarPlanta(Planta p) {
+	public boolean validarPlanta(Planta p) {
         boolean ret = false;
         if(p.getCodigo().isEmpty()) 
         	return false;
