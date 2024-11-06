@@ -6,6 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Utilidades {
+	private static Scanner in = new Scanner(System.in);
 	/**
      * Función que pide al usuario que introduzca 's' o 'S' para Sí o 'n' o 'N'
      * para No y devuelve true o false en cada caso. Si el usuario no introduce
@@ -17,7 +18,6 @@ public class Utilidades {
      */
     public static boolean leerBoolean() {
         boolean ret;
-        Scanner in;
         char resp;
         do {
             System.out.println("Pulse s para Sí o n para No");
@@ -46,7 +46,6 @@ public class Utilidades {
     public static double leerDouble() {
         double ret = 0.0;
         boolean correcto = false;
-        Scanner in;
         do {
             System.out.println("Introduzca un valor decimal (xx.xx)");
             in = new Scanner(System.in, "ISO-8859-1");
@@ -73,7 +72,6 @@ public class Utilidades {
         Date ret = null;
         int dia, mes, anio;
         boolean correcto = false;
-        Scanner in;
         do {
             System.out.println("Introduzca un valor para el día (1...31)");
             in = new Scanner(System.in, "ISO-8859-1");

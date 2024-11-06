@@ -1,9 +1,8 @@
    package control;
 
-import control.ServiciosMensaje;
-
 public class Controlador {
 	private static Controlador servicios;
+	private String usuarioAutenticado;
 	private ServiciosPlanta servPlanta;
 	private ServiciosEjemplar servEjemplar;
 	private ServiciosPersona servPersona;
@@ -44,4 +43,13 @@ public class Controlador {
 	public ServiciosCredenciales getServiciosCredenciales() {
 		return servCred;
 	}
+	public void setUsuarioAutenticado(String usuario) {
+        this.usuarioAutenticado = usuario;
+    }
+    public String getUsuarioAutenticado() {
+        return usuarioAutenticado;
+    }
+    public void cerrarSesion() {
+        this.usuarioAutenticado = null;
+    }
 }

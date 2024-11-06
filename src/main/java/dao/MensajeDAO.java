@@ -4,13 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import modelo.Ejemplar;
 import modelo.Mensaje;
 import modelo.Persona;
-import modelo.Planta;
 import utils.ConexionBD;
 
 public class MensajeDAO implements OperacionesCRUD<Mensaje> {
@@ -24,20 +23,19 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 	}
 
 
-	@Override
-	public long insertar(Mensaje m) {
-		try {
-			ps = conex.prepareStatement("INSERT INTO mensajes (id, fechahora, mensaje, idejemplar, idpersona) values (?,?,?,?,?)");
-			ps.setLong(1, m.getId());
-			ps.setDate(2, m.getFechaHora().toLocalDate());
-			ps.setString(3, m.getMensaje());
-			ps.setLong(4, m.getIdEjemplar());
-			ps.setLong(5, m.getIdPersona());
-			return ps.executeUpdate();
+	public long insertar(Mensaje mensaje) {
+		int filas = 0;
+		String consulta = "INSERT INTO mensajes (fechaHora, mensaje, idEjemplar, idPersona) VALUES (?, ?, ?, ?)";
+		try (PreparedStatement statement = conex.prepareStatement(consulta)) {
+			statement.setTimestamp(1, Timestamp.valueOf(mensaje.getFechaHora()));
+			statement.setString(2, mensaje.getMensaje()); 
+			statement.setLong(3, mensaje.getIdEjemplar()); 
+			statement.setLong(4, mensaje.getIdPersona()); 
+			filas = statement.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("Error al insertar en plantas " + e.getMessage());
+			e.printStackTrace();
 		}
-		return 0;
+		return filas;
 	}
 
 
@@ -65,7 +63,7 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 		rs.getTimestamp("fechahora").toLocalDateTime(), 
 		rs.getString("mensaje"), 
 		idEjemplar,
-		rs.getLong("idpersona") // Persona que anotó el mensaje
+		rs.getLong("idpersona") 
 		);
 		mensajes.add(mensaje);
 		}
@@ -91,7 +89,7 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 	        while (resultado.next()) {
 	            Mensaje mensaje = new Mensaje(                
 	                resultado.getInt("id"),                     
-	                resultado.getLocalDateTime("fechahora"),      
+	                resultado.getTimestamp("fechahora").toLocalDateTime(),      
 	                resultado.getString("mensaje"),             
 	                resultado.getInt("idejemplar"),            
 	                resultado.getInt("idpersona")               
@@ -110,11 +108,6 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 	}
 
 
-	@Override
-	public boolean modificar(Mensaje elemento) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 
 	

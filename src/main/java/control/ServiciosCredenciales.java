@@ -1,8 +1,6 @@
 package control;
 
 import dao.CredencialesDAO;
-import dao.PlantaDAO;
-import modelo.Planta;
 import utils.ConexionBD;
 
 public class ServiciosCredenciales {
@@ -16,5 +14,11 @@ public ServiciosCredenciales() {
 
 public boolean autenticar(String usuario, String password) {
     return credencialesDAO.autenticar(usuario, password);
+}
+public boolean usuarioExistente(String usuario) {
+	return credencialesDAO.usuarioExistente(usuario);
+}
+public int insertar(String usuario, String contrasena, Long idPersona) {
+	return credencialesDAO.insertar(usuario, contrasena, idPersona);
 }
 }

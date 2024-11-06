@@ -3,9 +3,7 @@ package control;
 import java.util.Collection;
 
 import dao.MensajeDAO;
-import dao.PersonaDAO;
 import modelo.Mensaje;
-import modelo.Persona;
 import utils.ConexionBD;
 
 public class ServiciosMensaje {
@@ -20,9 +18,7 @@ public ServiciosMensaje() {
 	public long insertar(Mensaje m) {
 		return mensajeDAO.insertar(m);
 	}
-	public boolean modificar(Mensaje m) {
-		return mensajeDAO.modificar(m);
-	}
+	
 
 	
 	
@@ -31,5 +27,17 @@ public ServiciosMensaje() {
 	}
 	public Mensaje buscarPorID(long id) {
 		return mensajeDAO.buscarPorID(id);
+	}
+
+	public boolean validarMensaje(String mensaje) {
+		if (mensaje ==null || mensaje.trim().isEmpty()) {
+	        System.out.println("El mensaje está vacio.");
+	        return false;
+	    }
+	    if (mensaje.length() > 500) {
+	        System.out.println("El mensaje es muy largo");
+	        return false;
+	    }
+		return false;
 	}
 }

@@ -10,7 +10,7 @@ public interface OperacionesCRUD<T> {
 	//CU1   CU5C
 	public Collection<T> verTodos();
 	//CU4B
-	public boolean modificar(T elemento);
+
 	
 	
 

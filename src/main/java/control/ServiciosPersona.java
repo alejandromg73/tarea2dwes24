@@ -3,9 +3,7 @@ package control;
 import java.util.Collection;
 
 import dao.PersonaDAO;
-import dao.PlantaDAO;
 import modelo.Persona;
-import modelo.Planta;
 import utils.ConexionBD;
 
 public class ServiciosPersona {
@@ -20,10 +18,6 @@ public class ServiciosPersona {
 		public long insertar(Persona pers) {
 			return personaDAO.insertar(pers);
 		}
-		public boolean modificar(Persona pers) {
-			return personaDAO.modificar(pers);
-		}
-
 		
 		public Collection<Persona> verTodos(){
 			return personaDAO.verTodos();
@@ -31,15 +25,20 @@ public class ServiciosPersona {
 		public Persona buscarPorID(long id) {
 			return personaDAO.buscarPorID(id);
 		}
+		public boolean emailExistente(String email) {
+			return personaDAO.emailExistente(email);
+		}
 		public boolean validarPersona(Persona pers) {
-	        boolean ret = false;
-	        if(p.getCodigo().isEmpty()) 
+	        if(pers.getNombre().isEmpty()) 
 	        	return false;
-	        if(p.getCodigo().length()<3 || p.getCodigo().length()>20)
+	        if(pers.getNombre().length()<3 || pers.getNombre().length()>20)
 	        	return false;
-	        
+	        if(pers.getEmail().isEmpty())
+	        	return false;
 	        return true;
 	    }
-
+		public long IdUsuarioAutenticado(String usuario) {
+			return personaDAO.IdUsuarioAutenticado(usuario);
+		}
 }
 

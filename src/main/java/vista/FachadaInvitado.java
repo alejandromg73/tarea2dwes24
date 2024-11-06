@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import control.Controlador;
-import control.ServiciosCredenciales;
 import modelo.Planta;
-import utils.ConexionBD;
 
 public class FachadaInvitado {
     private static FachadaInvitado portalInvitado;
@@ -54,6 +52,7 @@ public class FachadaInvitado {
         boolean autenticar = controlador.getServiciosCredenciales().autenticar(usuario, contraseña);
         if (autenticar) {
             System.out.println("Has iniciado sesión como " + usuario);
+            controlador.setUsuarioAutenticado(usuario);
             if (usuario.equalsIgnoreCase("admin")) {
                 FachadaAdmin.getPortalAdmin().menuAdmin();
                 System.out.println("Eres el usuario administrador");

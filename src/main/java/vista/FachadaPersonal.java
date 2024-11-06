@@ -1,8 +1,14 @@
 package vista;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import control.Controlador;
+import modelo.Ejemplar;
+import modelo.Mensaje;
+import modelo.Planta;
 
 public class FachadaPersonal {
 	 private static FachadaPersonal portalPersonal;
@@ -101,4 +107,60 @@ public class FachadaPersonal {
 	        }
 	    } while (opcion != 5);
 	    }
+	    public void verTodosEjemplares() {
+	        ArrayList<Ejemplar> ejemplares = (ArrayList<Ejemplar>) controlador.getServiciosEjemplar().verTodos();
+	        if (ejemplares == null || ejemplares.isEmpty()) {
+	            System.out.println("Lo siento, no hay ejemplsres para mostrar en la base de datos.");
+	            return;
+	        }
+	        System.out.println("Todos los ejemplares: ");
+	        for (Ejemplar e : ejemplares) {
+	            System.out.println(e);
+	        }
+	    }
+	    public void nuevoMensaje() {
+	        Scanner in = new Scanner(System.in);
+	        Mensaje nuevoMensaje = null;
+	        int numeroEjemplar = 0;
+	        boolean correcto = false;
+	        do {
+	            try {
+	            	verTodosEjemplares();
+	                System.out.println("Introduce el número del ejemplar: ");
+	                numeroEjemplar = in.nextInt();
+	                in.nextLine();
+	                if (numeroEjemplar < 1 || numeroEjemplar > controlador.getServiciosEjemplar().contarEjemplares()) {
+	                    System.out.println("Debes introducir un número entre el 1 y " + controlador.getServiciosEjemplar().contarEjemplares());
+	                } else {
+	                    String mensaje = "";
+	                    boolean mensajeValido = false;
+	                    do {
+	                        System.out.println("Introduce el mensaje: ");
+	                        mensaje = in.nextLine();
+	                        if (!controlador.getServiciosMensaje().validarMensaje(mensaje)) {
+	                            System.out.println("Formato de mensaje no válido.");
+	                        } else {
+	                            mensajeValido = true;
+	                            String usuarioAutenticado = controlador.getUsuarioAutenticado();
+	                            long idUsuario = controlador.getServiciosPersona().IdUsuarioAutenticado(usuarioAutenticado);
+	                            nuevoMensaje = new Mensaje(
+	                                    LocalDateTime.now(), 
+	                                    mensaje, 
+	                                    numeroEjemplar,
+	                                    idUsuario);                       
+	                            if (controlador.getServiciosMensaje().insertar(nuevoMensaje) > 0) {
+	                                System.out.println("Mensaje añadido.");
+	                                correcto = true;
+	                            } else {
+	                                System.out.println("No se ha podido añadir el mensaje.");
+	                            }
+	                        }
+	                    } while (!mensajeValido);
+	                }
+	            } catch (InputMismatchException e) {
+	                System.out.println("Debes introducir un número válido.");
+	                in.nextLine();
+	            }
+	        } while (!correcto);
+}
 }

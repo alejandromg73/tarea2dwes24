@@ -3,9 +3,7 @@ package control;
 import java.util.Collection;
 
 import dao.EjemplarDAO;
-import dao.PlantaDAO;
 import modelo.Ejemplar;
-import modelo.Planta;
 import utils.ConexionBD;
 
 public class ServiciosEjemplar {
@@ -24,9 +22,7 @@ public ServiciosEjemplar() {
 	public long insertar(Ejemplar e) {
 		return ejemplarDAO.insertar(e);
 	}
-	public boolean modificar(Ejemplar e) {
-		return ejemplarDAO.modificar(e);
-	}
+	
 
 	
 	public Collection<Ejemplar> verTodos(){
@@ -35,8 +31,7 @@ public ServiciosEjemplar() {
 	public Ejemplar buscarPorID(long id) {
 		return ejemplarDAO.buscarPorID(id);
 	}
-	public static boolean validarEjemplar(Ejemplar e) {
-        boolean ret = false;
+	public boolean validarEjemplar(Ejemplar e) {
         if(e.getCodigoPlanta().isEmpty()) 
         	return false;
         if(e.getCodigoPlanta().length()<3 || e.getCodigoPlanta().length()>20)
@@ -44,5 +39,9 @@ public ServiciosEjemplar() {
         
         return true;
     }
+	public int contarEjemplares() {
+		return ejemplarDAO.contarEjemplares();
+	}
+
 	
 }
