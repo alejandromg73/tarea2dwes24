@@ -33,7 +33,7 @@ public class FachadaAdmin {
             System.out.println("2. Gestión de ejemplares.");
             System.out.println("3. Gestión de mensajes.");
             System.out.println("4. Gestión de personas.");
-            System.out.println("5. SALIR DEL PROGRAMA.");
+            System.out.println("5. CERRAR SESIÓN.");
             opcion = in.nextInt();
             if (opcion < 1 || opcion > 5) {
                 System.out.println("Opción incorrecta.");
@@ -54,7 +54,8 @@ public class FachadaAdmin {
                     break;
             }
         } while (opcion != 5);
-        System.out.println("Fin del programa");
+        Controlador.getServicios().cerrarSesion();
+        FachadaInvitado.getPortalInvitado().menuInvitado();
     }
     public void menuAdminPlantas() {
         int opcion = 0;
@@ -169,7 +170,7 @@ public class FachadaAdmin {
         }
         switch (opcion) {
             case 1:
-            	//nuevoMensaje();
+            	FachadaPersonal.getPortalPersonal().nuevoMensaje();
                 break;
             case 2:
                 menuAdminVerMensajes();
@@ -197,7 +198,7 @@ public class FachadaAdmin {
             	verTodosMensajes();
                 break;
             case 2:
-                //VerMensajesPersona();
+                FachadaPersonal.getPortalPersonal().verMensajesPersona();
                 break;
             case 3:
                 //VerMensajesFechas();
@@ -218,23 +219,27 @@ public class FachadaAdmin {
             p = new Planta();
             System.out.println("Introduce los datos para una nueva planta:");
             System.out.print("Código: ");
-            String codigo = in.nextLine().trim().toUpperCase();
-            correcto = controlador.getServiciosPlanta().validarCodigo(codigo);
-            if (!correcto) {
-                System.out.println("El formato del código no es correcto");
-                
-            }else {
-            	p.setCodigo(codigo);
-            }
-            System.out.print("Nombre común: ");
-            String nombrecomun = in.nextLine();
-            p.setNombrecomun(nombrecomun);
-            System.out.print("Nombre científico: ");
-            String nombrecientifico = in.nextLine();
-            p.setNombrecientifico(nombrecientifico);
-            correcto = controlador.getServiciosPlanta().validarPlanta(p);
-            if (!correcto) {
-                System.out.println("Los datos que has introducido no son correctos.");
+            try {
+                String codigo = in.nextLine().trim().toUpperCase();
+                correcto = controlador.getServiciosPlanta().validarCodigo(codigo);
+                if (!correcto) {
+                    System.out.println("El formato del código no es correcto");
+                } else {
+                    p.setCodigo(codigo);
+                    System.out.print("Nombre común: ");
+                    String nombrecomun = in.nextLine();
+                    p.setNombrecomun(nombrecomun);
+                    System.out.print("Nombre científico: ");
+                    String nombrecientifico = in.nextLine();
+                    p.setNombrecientifico(nombrecientifico);
+                    correcto = controlador.getServiciosPlanta().validarPlanta(p);
+                    if (!correcto) {
+                        System.out.println("Los datos que has introducido no son correctos.");
+                    }
+                }
+            } catch (Exception ex) {
+                System.out.println("Error durante la entrada de datos: " + ex.getMessage());
+                correcto = false;
             }
         } while (!correcto);
         try {
@@ -247,7 +252,7 @@ public class FachadaAdmin {
     }
 
     public Ejemplar nuevoEjemplar() {
-    	Ejemplar e;
+        Ejemplar e;
         Mensaje m;
         boolean correcto = false;
         do {
@@ -263,29 +268,26 @@ public class FachadaAdmin {
         } while (!correcto);
         try {
             long idEjemplar = controlador.getServiciosEjemplar().insertar(e);
-            if (idEjemplar>0) {
+            if (idEjemplar > 0) {
                 e.setId(idEjemplar);
                 e.setNombre(e.getCodigoPlanta() + "_" + idEjemplar);
-                System.out.println("Ejemplar insertado");
-                System.out.print("Introduce el mensaje para el nuevo ejemplar: ");
-                String mensajeTexto = "Añadido el ejemplar " + e.getNombre();
+                System.out.println("Ejemplar insertado con ID: " + idEjemplar);
+                String mensaje = "Añadido el ejemplar " + e.getNombre();
                 LocalDateTime fechaHora = LocalDateTime.now();
-                String idUsuario = controlador.getUsuarioAutenticado();
-                m = new Mensaje(fechaHora, mensajeTexto, idEjemplar, idUsuario);
-                try {
-                    if (controlador.getServiciosMensaje().insertar(m)> 0) {
-                        System.out.println("Todo bien.");
-                    } else {
-                        System.out.println("No se pudo añadir el mensaje asociado al ejemplar.");
-                    }
-                } catch (Exception ex) {
-                    System.out.println("Error al insertar el mensaje: " + ex.getMessage());
+                String usuarioAutenticado = controlador.getUsuarioAutenticado();
+                long idUsuario = controlador.getServiciosPersona().IdUsuarioAutenticado(usuarioAutenticado);
+                m = new Mensaje(fechaHora, mensaje, idEjemplar, idUsuario);
+                if (controlador.getServiciosMensaje().insertar(m) > 0) {
+                    System.out.println("Mensaje añadido correctamente.");
+                } else {
+                    System.out.println("No se pudo añadir el mensaje asociado al ejemplar.");
                 }
+            } else {
+                System.out.println("Error al insertar el ejemplar en la base de datos.");
             }
         } catch (Exception ex) {
-            System.out.println("Error al insertar el ejemplar: " + ex.getMessage());
+            System.out.println("Error al insertar el ejemplar o el mensaje: " + ex.getMessage());
         }
-
         return e;
     }
     public Persona nuevaPersona() {
@@ -296,7 +298,6 @@ public class FachadaAdmin {
         boolean usuarioValido = false;
         String usuario = "";
         String contrasena = "";
-
         do {
             emailValido = false;
             usuarioValido = false;
@@ -337,13 +338,12 @@ public class FachadaAdmin {
                 System.out.println("Los datos que has introducido no son correctos.");
             }
         } while (!correcto);
-
         try {
             long idPersona = controlador.getServiciosPersona().insertar(pers);
             if (idPersona > 0) {
                 c.setIdPersona(idPersona);
-                int insercion = controlador.getServiciosCredenciales().insertar(usuario, contrasena, idPersona);
-                if (insercion > 0) {
+                int insertarCredenciales = controlador.getServiciosCredenciales().insertar(usuario, contrasena, idPersona);
+                if (insertarCredenciales > 0) {
                     System.out.println("Persona y sus credenciales insertadas correctamente.");
                 } else {
                     System.out.println("Error al insertar las credenciales en la base de datos.");
@@ -393,11 +393,11 @@ public class FachadaAdmin {
     	        }
     	    } while (valido==false);
     	    System.out.print("Introduce el nuevo nombre común de la planta: ");
-    	    String nuevoNombreComun = in.nextLine().trim();
+    	    String nuevoNombreComun = in.nextLine().trim().toUpperCase();
     	    try {
     	        boolean nuevo = controlador.getServiciosPlanta().actualizarNombreComun(codigo, nuevoNombreComun);
-    	        if (nuevo) {
-    	            System.out.println("El nombre común de la planta con código " + codigo + "ha sido actualizado, ahora el nombre es" + nuevoNombreComun);
+    	        if (nuevo==true) {
+    	            System.out.println("El nombre común de la planta con código " + codigo + "ha sido actualizado, ahora el nombre es:" + nuevoNombreComun);
     	        } else {
     	            System.out.println("Error al intentar actualizar el nombre común");
     	        }
@@ -427,7 +427,7 @@ public class FachadaAdmin {
 	    String nuevoNombreCientifico = in.nextLine().trim();
 	    try {
 	        boolean nuevo = controlador.getServiciosPlanta().actualizarNombreCientifico(codigo, nuevoNombreCientifico);
-	        if (nuevo) {
+	        if (nuevo == true) {
 	            System.out.println("El nombre cientifico de la planta con código " + codigo + "ha sido actualizado, ahora el nombre es" + nuevoNombreCientifico);
 	        } else {
 	            System.out.println("Error al intentar actualizar el nombre cientifico");

@@ -13,6 +13,7 @@ public ServiciosCredenciales() {
 }
 
 public boolean autenticar(String usuario, String password) {
+
     return credencialesDAO.autenticar(usuario, password);
 }
 public boolean usuarioExistente(String usuario) {

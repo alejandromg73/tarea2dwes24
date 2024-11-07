@@ -16,20 +16,23 @@ public class CredencialesDAO {
 			this.conex = conex;
 	}
 	
-	public boolean autenticar (String usuario, String password) {
-		        String consulta = "SELECT COUNT(*) FROM credenciales WHERE usuario = ? AND contrasena = ?";
-		        try (PreparedStatement ps= conex.prepareStatement(consulta)) {
-		            ps.setString(1, usuario);
-		            ps.setString(2, password);
-		            ResultSet rs = ps.executeQuery();
-		            if (rs.next()) {
-		                return true;
-		            }
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
-		        return false; 
-	}
+	public boolean autenticar(String usuario, String password) {
+        String consulta = "SELECT COUNT(*) FROM credenciales WHERE usuario = ? AND password = ?";
+        try (PreparedStatement ps = conex.prepareStatement(consulta)) {
+            ps.setString(1, usuario);
+            ps.setString(2, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int total = rs.getInt(1);
+                    return total > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al autenticar usuario: " + e.getMessage());
+        }
+        return false;
+    }
+
 	public boolean usuarioExistente(String usuario) {
 		String usuarioExistente = "SELECT usuario FROM CREDENCIALES";
 		ArrayList<String> usuariosExistentes = new ArrayList<String>();

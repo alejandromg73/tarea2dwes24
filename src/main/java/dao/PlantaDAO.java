@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
+import modelo.Mensaje;
 import modelo.Planta;
 import utils.ConexionBD;
 
@@ -36,7 +37,7 @@ public class PlantaDAO implements OperacionesCRUD<Planta> {
 		    return 0;
 		}
 
-		@Override
+		
 		public Planta buscarPorID(long id) {
 		    String consulta = "SELECT * FROM plantas WHERE codigo = ?";
 		    Planta planta = null;
@@ -59,14 +60,13 @@ public class PlantaDAO implements OperacionesCRUD<Planta> {
 		        System.out.println("Se ha producido una Exception: " + e.getMessage());
 		        e.printStackTrace();
 		    }
-		    
 			return planta; 
 		}
 
 
 		@Override
 		public Collection<Planta> verTodos() {
-		    HashSet<Planta> todas = new HashSet<>(); 
+			ArrayList<Planta> todas = new ArrayList<Planta>(); 
 		    String consulta = "SELECT * FROM plantas"; 
 		    try {
 		        if (this.conex == null || this.conex.isClosed()) {
@@ -81,21 +81,20 @@ public class PlantaDAO implements OperacionesCRUD<Planta> {
 		                resultado.getString("nombrecientifico"));
 		            todas.add(planta); 
 		        }
-		        conex.close();
+		        
 		    } catch (SQLException e) {
 		        System.out.println("Error al obtener todas las plantas: " + e.getMessage());
 		        e.printStackTrace();
 		    
 		    }
-		    
 		    return todas;
 		}
 		
 
 		public boolean actualizarNombreComun(String codigo, String nombreComun) {
-		    String sql = "UPDATE plantas SET nombrecomun = ? WHERE codigo = ?";
+		    String consulta = "UPDATE plantas SET nombrecomun = ? WHERE codigo = ?";
 		    try (Connection connection = ConexionBD.getConexion(); 
-		         PreparedStatement ps = connection.prepareStatement(sql)) {
+		         PreparedStatement ps = connection.prepareStatement(consulta)) {
 		        ps.setString(1, nombreComun);
 		        ps.setString(2, codigo);
 		        int filas = ps.executeUpdate();
@@ -106,9 +105,9 @@ public class PlantaDAO implements OperacionesCRUD<Planta> {
 		    }
 		}
 		public boolean actualizarNombreCientifico(String codigo, String nombreCientifico) {
-		    String sql = "UPDATE plantas SET nombrecientifico = ? WHERE codigo = ?";
+		    String consulta = "UPDATE plantas SET nombrecientifico = ? WHERE codigo = ?";
 		    try (Connection connection = ConexionBD.getConexion(); 
-		         PreparedStatement ps = connection.prepareStatement(sql)) {
+		         PreparedStatement ps = connection.prepareStatement(consulta)) {
 		        ps.setString(1, nombreCientifico);
 		        ps.setString(2, codigo);
 		        int filas = ps.executeUpdate();
@@ -119,10 +118,10 @@ public class PlantaDAO implements OperacionesCRUD<Planta> {
 		    }
 		}
 		public boolean codigoExistente(String codigo) {
-			String sqlString = "SELECT codigo FROM PLANTAS";
+			String consulta = "SELECT codigo FROM PLANTAS";
 			ArrayList<String> cod = new ArrayList<String>();
 			try {
-				ps = conex.prepareStatement(sqlString);
+				ps = conex.prepareStatement(consulta);
 				rs = ps.executeQuery();
 				while (rs.next()) {
 					cod.add(rs.getString(1));

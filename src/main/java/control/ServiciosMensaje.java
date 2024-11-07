@@ -1,5 +1,6 @@
 package control;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import dao.MensajeDAO;
@@ -25,8 +26,8 @@ public ServiciosMensaje() {
 	public Collection<Mensaje> verTodos(){
 		return mensajeDAO.verTodos();
 	}
-	public Mensaje buscarPorID(long id) {
-		return mensajeDAO.buscarPorID(id);
+	public ArrayList<Mensaje> verMensajesPorPersona(long idPersona) {
+		return mensajeDAO.verMensajesPorPersona(idPersona);
 	}
 
 	public boolean validarMensaje(String mensaje) {
@@ -39,5 +40,8 @@ public ServiciosMensaje() {
 	        return false;
 	    }
 		return false;
+	}
+	public ArrayList<Mensaje> verMensajesPorCodigoPlanta(String codigoPlanta) {
+		return mensajeDAO.verMensajesPorCodigoPlanta(codigoPlanta);
 	}
 }

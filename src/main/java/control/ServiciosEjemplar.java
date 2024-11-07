@@ -1,9 +1,11 @@
 package control;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import dao.EjemplarDAO;
 import modelo.Ejemplar;
+import modelo.Planta;
 import utils.ConexionBD;
 
 public class ServiciosEjemplar {
@@ -41,6 +43,9 @@ public ServiciosEjemplar() {
     }
 	public int contarEjemplares() {
 		return ejemplarDAO.contarEjemplares();
+	}
+	public ArrayList<Ejemplar> ejemplaresPorTipoPlanta(String codigo) {
+		return ejemplarDAO.ejemplaresPorTipoPlanta(codigo);
 	}
 
 	

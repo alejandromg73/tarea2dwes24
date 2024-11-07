@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import modelo.Mensaje;
-import modelo.Persona;
 import utils.ConexionBD;
 
 public class MensajeDAO implements OperacionesCRUD<Mensaje> {
@@ -22,58 +21,68 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 			this.conex = conex;
 	}
 
-
+	@Override
 	public long insertar(Mensaje mensaje) {
 		int filas = 0;
 		String consulta = "INSERT INTO mensajes (fechaHora, mensaje, idEjemplar, idPersona) VALUES (?, ?, ?, ?)";
-		try (PreparedStatement statement = conex.prepareStatement(consulta)) {
-			statement.setTimestamp(1, Timestamp.valueOf(mensaje.getFechaHora()));
-			statement.setString(2, mensaje.getMensaje()); 
-			statement.setLong(3, mensaje.getIdEjemplar()); 
-			statement.setLong(4, mensaje.getIdPersona()); 
-			filas = statement.executeUpdate();
+		try (PreparedStatement ps = conex.prepareStatement(consulta)) {
+			ps.setTimestamp(1, Timestamp.valueOf(mensaje.getFechaHora()));
+			ps.setString(2, mensaje.getMensaje()); 
+			ps.setLong(3, mensaje.getIdEjemplar()); 
+			ps.setLong(4, mensaje.getIdPersona()); 
+			filas = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return filas;
 	}
 
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Mensaje buscarPorID(long idEjemplar) {
-		ArrayList mensajes = new ArrayList<Mensaje>();
-		String consulta = "SELECT mensajes.id, mensajes.fechahora, mensajes.mensaje, " +
-                "personas.id, personas.nombre, personas.email " +
-                "FROM mensajes " +
-                "INNER JOIN personas ON mensajes.idpersona = personas.id " +
-                "WHERE mensajes.idejemplar = ? " +
-                "ORDER BY mensajes.fechahora;";
-
-		try(PreparedStatement ps = conex.prepareStatement(consulta)) {
-		ps.setLong(1, idEjemplar); 
-		rs = ps.executeQuery();
-		while(rs.next()) {
-		Persona persona = new Persona(
-		rs.getLong("id"),
-		rs.getString("nombre"),
-		rs.getString("email"));
-		Mensaje mensaje = new Mensaje(
-		rs.getLong("id"), 
-		rs.getTimestamp("fechahora").toLocalDateTime(), 
-		rs.getString("mensaje"), 
-		idEjemplar,
-		rs.getLong("idpersona") 
-		);
-		mensajes.add(mensaje);
-		}
-
-		} catch (SQLException e) {
-		System.out.println("Error al obtener los mensajesdel ejemplar: " + e.getMessage());
-		e.printStackTrace();
-		return mensajes;
-		}
-		}
+	public ArrayList<Mensaje> verMensajesPorPersona(long idPersona) {
+	    ArrayList<Mensaje> mensajesPersona = new ArrayList<>();
+	    String consulta = "SELECT * FROM mensajes WHERE idpersona = ?";
+	    try (PreparedStatement ps = conex.prepareStatement(consulta)) {
+	        ps.setLong(1, idPersona);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                Mensaje m = new Mensaje();
+	                m.setId(rs.getLong("id"));
+	                m.setFechaHora(rs.getTimestamp("fechahora").toLocalDateTime());
+	                m.setMensaje(rs.getString("mensaje"));
+	                m.setIdEjemplar(rs.getLong("idejemplar"));
+	                m.setIdPersona(rs.getLong("idpersona"));
+	                mensajesPersona.add(m);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error al obtener los mensajes: " + e.getMessage());
+	    }
+	    return mensajesPersona;
+	}
+	public ArrayList<Mensaje> verMensajesPorCodigoPlanta(String codigoPlanta) {
+	    String consulta = "SELECT mensajes.id, fechahora, mensaje, mensajes.idejemplar, mensajes.idpersona " +
+	           "FROM mensajes " +"INNER JOIN ejemplares ON mensajes.idejemplar = ejemplares.id " + "INNER JOIN plantas ON ejemplares.id_planta = plantas.codigo " +
+	            	"WHERE plantas.codigo = ?";
+	    ArrayList<Mensaje> mensajesPlanta = new ArrayList<>();
+	    try (PreparedStatement ps = conex.prepareStatement(consulta)) {
+	        ps.setString(1, codigoPlanta);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                Mensaje m = new Mensaje();
+	                m.setId(rs.getLong("id"));
+	                m.setFechaHora(rs.getTimestamp("fechahora").toLocalDateTime());
+	                m.setMensaje(rs.getString("mensaje"));
+	                m.setIdEjemplar(rs.getLong("idejemplar"));
+	                m.setIdPersona(rs.getLong("idpersona"));
+	                mensajesPlanta.add(m);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error al consultar los mensajes por tipo de planta: " + e.getMessage());
+	    }
+	    return mensajesPlanta;
+	}
+	
+	
 
 
 	@Override

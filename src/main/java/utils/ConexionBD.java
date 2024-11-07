@@ -17,7 +17,7 @@ import dao.PlantaDAO;
 
 public class ConexionBD {
 
-	private static Connection con;
+	private static Connection con = getConexion();
 	private static ConexionBD f;
 
 	public static ConexionBD getInstance() {
@@ -25,7 +25,7 @@ public class ConexionBD {
 			f = new ConexionBD();
 		return f;
 	}
-
+	
 	public static Connection getConexion() {
 		Properties prop = new Properties();
 		MysqlDataSource m = new MysqlDataSource();
@@ -33,12 +33,10 @@ public class ConexionBD {
 		try {
 			fis = new FileInputStream("src/main/resources/db.properties");
 			prop.load(fis);
-
 			m.setUrl(prop.getProperty("url"));
 			m.setUser(prop.getProperty("usuario"));
 			m.setPassword(prop.getProperty("password"));
 			con = m.getConnection();
-
 		} catch (SQLException e) {
 			System.out.println("Ha ocurrido un error de SQLException" + e.getLocalizedMessage());
 			e.printStackTrace();
