@@ -71,11 +71,11 @@ public class FachadaInvitado {
                 }
             } else {
                 System.out.println("Usuario o contraseña incorrectos.");
-                FachadaInvitado.getPortalInvitado().menuInvitado();
+                return;
             }
         } catch (Exception e) {
             System.out.println("No se ha podido iniciar sesión: " + e.getMessage());
-            FachadaInvitado.getPortalInvitado().menuInvitado();
+            return;
         }
     }
     public void verTodasPlantas() {

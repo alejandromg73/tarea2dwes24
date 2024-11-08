@@ -21,20 +21,26 @@ public class PersonaDAO implements OperacionesCRUD<Persona> {
 			this.conex = conex;
 	}
 
-
 	@Override
 	public long insertar(Persona pers) {
-		try {
-			ps = conex.prepareStatement("INSERT INTO personas (id, nombre, email) values (?,?,?)");
-			ps.setLong(1, pers.getId());
-			ps.setString(2, pers.getNombre());
-			ps.setString(3, pers.getEmail());
-			return ps.executeUpdate();
-		} catch (SQLException e) {
-			System.out.println("Error al insertar en plantas " + e.getMessage());
-		}
-		
-		return 0;
+	    long id = 0;
+	    String consulta = "INSERT INTO personas (nombre, email) values (?, ?)";
+	    try (PreparedStatement ps = conex.prepareStatement(consulta, PreparedStatement.RETURN_GENERATED_KEYS)) {
+	        ps.setString(1, pers.getNombre());
+	        ps.setString(2, pers.getEmail());
+	        int filas = ps.executeUpdate();
+	        if (filas > 0) {
+	            try (ResultSet rs = ps.getGeneratedKeys()) {
+	                if (rs.next()) {
+	                    id = rs.getLong(1);
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error al insertar la persona: " + e.getMessage());
+	    }
+	    
+	    return id; 
 	}
 	public boolean emailExistente(String email) {
 

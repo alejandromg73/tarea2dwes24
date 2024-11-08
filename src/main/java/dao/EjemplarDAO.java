@@ -23,15 +23,36 @@ import utils.ConexionBD;
 
 		@Override
 		public long insertar(Ejemplar ej) {
-			try {
-				ps = conex.prepareStatement("INSERT INTO ejemplares (nombre, id_planta) values (?,?,?)");
-				ps.setString(1, ej.getNombre());
-				ps.setString(2, ej.getCodigoPlanta());
-				return ps.executeUpdate();
-			} catch (SQLException e) {
-				System.out.println("Error al insertar el ejemplar " + e.getMessage());
-			}
-			return 0;
+		    String consulta = "INSERT INTO ejemplares (nombre, id_planta) VALUES (?, ?)";
+		    long id = 0;
+		    try (PreparedStatement ps = conex.prepareStatement(consulta, PreparedStatement.RETURN_GENERATED_KEYS)) {
+		        ps.setString(1, ej.getNombre());
+		        ps.setString(2, ej.getCodigoPlanta());
+		        int filas = ps.executeUpdate();
+		        if (filas > 0) {
+		            try (ResultSet rs = ps.getGeneratedKeys()) {
+		                if (rs.next()) {
+		                    id = rs.getLong(1);
+		                }
+		            }
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error al insertar el ejemplar: " + e.getMessage());
+		    }
+		    return id;
+		}
+
+		public boolean cambiarNombre(long idEjemplar, String nuevoNombre) {
+		    String consulta = "UPDATE ejemplares SET nombre = ? WHERE id = ?";
+		    try (PreparedStatement ps = conex.prepareStatement(consulta)) {
+		        ps.setString(1, nuevoNombre);
+		        ps.setLong(2, idEjemplar);
+		        int filasActualizadas = ps.executeUpdate();
+		        return filasActualizadas > 0;
+		    } catch (SQLException e) {
+		        System.out.println("Error al actualizar el nombre del ejemplar: " + e.getMessage());
+		    }
+		    return false;
 		}
 
 

@@ -41,9 +41,18 @@ public ServiciosPlanta() {
 	public boolean validarPlanta(Planta p) {
         if(p.getCodigo().isEmpty()) 
         	return false;
-        if(p.getCodigo().length()<3 || p.getCodigo().length()>20)
+        if(p.getCodigo().length()<3 || p.getCodigo().length()>50)
         	return false;
         if(p.getNombrecientifico().isEmpty() || p.getNombrecomun().isEmpty())
+        	return false;
+        if (!p.getCodigo().matches("^[A-Za-z0-9]+$")) 
+	        return false;
+	    if(p.getNombrecientifico().length()<3 || p.getNombrecientifico().length()>100)
+	        return false;
+	    
+        if(p.getNombrecomun().length()<3 || p.getNombrecomun().length()>100)
+        	return false;
+        if(!p.getNombrecientifico().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$") || !p.getNombrecomun().matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$"))
         	return false;
         return true;
     }
@@ -51,8 +60,11 @@ public ServiciosPlanta() {
 	    if (codigo == null ||codigo.isEmpty()) {
 	        return false;
 	    }
-	    if (!codigo.matches("^[a-zA-Z]+$")) {
+	    if (!codigo.matches("^[A-Za-z0-9]+$")) {
 	        return false;
-	    } return true;
+	    }
+	    if (codigo.length()<3 || codigo.length()>50)
+	    	return false;
+	    return true;
 	}
 }

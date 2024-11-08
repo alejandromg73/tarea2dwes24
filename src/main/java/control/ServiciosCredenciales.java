@@ -22,4 +22,11 @@ public boolean usuarioExistente(String usuario) {
 public int insertar(String usuario, String contrasena, Long idPersona) {
 	return credencialesDAO.insertar(usuario, contrasena, idPersona);
 }
+public boolean validarContraseña(String contraseña) {
+    if(contraseña.matches("^(?=.*[.,])[A-Za-z0-9.,]{8,}$")) {
+    	return true;
+    }
+    return false;
 }
+}
+

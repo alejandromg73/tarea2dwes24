@@ -54,6 +54,9 @@ public class FachadaAdmin {
                 case 4:
                     menuAdminPersonas();
                     break;
+                case 5:
+                	Controlador.getServicios().cerrarSesion();
+                	return;
             }
         }catch(InputMismatchException e){
         	System.out.println("Debes ingresar un número.");
@@ -61,8 +64,6 @@ public class FachadaAdmin {
         	opcion = 0;
         }
     	} while (opcion != 5);
-        Controlador.getServicios().cerrarSesion();
-        FachadaInvitado.getPortalInvitado().menuInvitado();
     }
     public void menuAdminPlantas() {
         int opcion = 0;
@@ -222,7 +223,7 @@ public class FachadaAdmin {
         System.out.println("2. Ver mensajes por persona.");
         System.out.println("3. Ver mensajes por rango de fechas.");
         System.out.println("4. Ver mensajes por tipo de planta.");
-        System.out.println("5. Volver al menú principal.");
+        System.out.println("5. Volver al menú de mensajes.");
         try {
         opcion = in.nextInt();
         if (opcion < 1 || opcion > 5) {
@@ -254,60 +255,72 @@ public class FachadaAdmin {
     
 
     public Planta nuevaPlanta() {
-    	in.nextLine();
+        in.nextLine();
         Planta p;
-        boolean correcto = false;
+        boolean datosPlantaCorrectos = false;
         do {
             p = new Planta();
-            System.out.println("Introduce los datos para una nueva planta:");
             System.out.print("Código: ");
             try {
                 String codigo = in.nextLine().trim().toUpperCase();
-                correcto = controlador.getServiciosPlanta().validarCodigo(codigo);
+                boolean correcto = controlador.getServiciosPlanta().validarCodigo(codigo);
+                boolean existe = controlador.getServiciosPlanta().codigoExistente(codigo);
                 if (!correcto) {
-                    System.out.println("El formato del código no es correcto");
-                } else {
-                    p.setCodigo(codigo);
-                    System.out.print("Nombre común: ");
-                    String nombrecomun = in.nextLine();
-                    p.setNombrecomun(nombrecomun);
-                    System.out.print("Nombre científico: ");
-                    String nombrecientifico = in.nextLine();
-                    p.setNombrecientifico(nombrecientifico);
-                    correcto = controlador.getServiciosPlanta().validarPlanta(p);
-                    if (!correcto) {
-                        System.out.println("Los datos que has introducido no son correctos.");
-                    }
+                    System.out.println("El formato del código no es correcto.");
+                    continue;
+                }
+                if (existe) {
+                    System.out.println("El código ya existe para una planta.");
+                    continue;
+                }
+                p.setCodigo(codigo);
+                System.out.print("Nombre común: ");
+                String nombreComun = in.nextLine().trim();
+                p.setNombrecomun(nombreComun);
+                System.out.print("Nombre científico: ");
+                String nombreCientifico = in.nextLine().trim();
+                p.setNombrecientifico(nombreCientifico);
+                datosPlantaCorrectos = controlador.getServiciosPlanta().validarPlanta(p);
+                if (!datosPlantaCorrectos) {
+                    System.out.println("Los datos que has introducido no son correctos.");
                 }
             } catch (Exception ex) {
                 System.out.println("Error durante la entrada de datos: " + ex.getMessage());
-                correcto = false;
+                datosPlantaCorrectos = false;
             }
-        } while (!correcto);
+        } while (!datosPlantaCorrectos);
         try {
-            controlador.getServiciosPlanta().insertar(p);
-            System.out.println("Planta insertada");
+            long plant = controlador.getServiciosPlanta().insertar(p);
+            if (plant > 0) {
+                System.out.println("Planta insertada correctamente");
+            } else {
+                System.out.println("Error al insertar la planta.");
+            }
         } catch (Exception ex) {
             System.out.println("Error al insertar la planta: " + ex.getMessage());
         }
+
         return p;
     }
 
+
     public Ejemplar nuevoEjemplar() {
-    	in.nextLine();
+        in.nextLine(); 
         Ejemplar e;
         Mensaje m;
         boolean correcto = false;
         do {
             e = new Ejemplar();
-            System.out.println("Introduce los datos para crear un nuevo ejemplar:");
             System.out.print("Código de la planta del ejemplar: ");
-            String codigoPlanta = in.nextLine();
-            e.setCodigoPlanta(codigoPlanta);
-            correcto = controlador.getServiciosEjemplar().validarEjemplar(e);
-            if (!correcto) {
-                System.out.println("Los datos que has introducido no son correctos.");
+            String codigo = in.nextLine().trim().toUpperCase();
+            boolean valido = controlador.getServiciosPlanta().validarCodigo(codigo);
+            if (!valido) {
+                System.out.println("El formato del código no es correcto.");
+                continue; 
             }
+            e.setCodigoPlanta(codigo);
+            e.setNombre(codigo);
+            correcto = true;
         } while (!correcto);
         try {
             long idEjemplar = controlador.getServiciosEjemplar().insertar(e);
@@ -315,6 +328,7 @@ public class FachadaAdmin {
                 e.setId(idEjemplar);
                 e.setNombre(e.getCodigoPlanta() + "_" + idEjemplar);
                 System.out.println("Ejemplar insertado con ID: " + idEjemplar);
+                controlador.getServiciosEjemplar().cambiarNombre(e.getId(), e.getNombre());
                 String mensaje = "Añadido el ejemplar " + e.getNombre();
                 LocalDateTime fechaHora = LocalDateTime.now();
                 String usuarioAutenticado = controlador.getUsuarioAutenticado();
@@ -333,21 +347,23 @@ public class FachadaAdmin {
         }
         return e;
     }
+
     public Persona nuevaPersona() {
-    	in.nextLine();
+        in.nextLine();
         Persona pers;
         Credenciales c;
         boolean correcto = false;
         boolean emailValido = false;
         boolean usuarioValido = false;
+        boolean contraseñaValida = false;
         String usuario = "";
-        String contrasena = "";
+        String contraseña = "";
         do {
             emailValido = false;
             usuarioValido = false;
-            pers= new Persona();
-            c= new Credenciales();
-            System.out.println("Introduce los datos para registrar una nueva persona:");
+            contraseñaValida = false;
+            pers = new Persona(); 
+            c = new Credenciales();
             System.out.print("Nombre: ");
             String nombre = in.nextLine().trim();
             pers.setNombre(nombre);
@@ -366,17 +382,24 @@ public class FachadaAdmin {
                 System.out.print("Usuario: ");
                 usuario = in.nextLine().trim();
                 if (usuario.equalsIgnoreCase("ADMIN")) {
-                    System.out.println("El usuario de admin ya está ocupado.");
-                } else if (controlador.getServiciosCredenciales().usuarioExistente(usuario)) {
-                    System.out.println("El usuario que has introducido ya está registrado.");
+                    System.out.println("El usuario 'admin' ya está ocupado.");
+                } else if (controlador.getServiciosCredenciales().usuarioExistente(usuario) || usuario.length() < 3) {
+                    System.out.println("El usuario que has introducido ya está registrado o no cumple con los requisitos mínimos.");
                 } else {
                     usuarioValido = true;
                     c.setUsuario(usuario);
                 }
             } while (!usuarioValido);
-            System.out.print("Contraseña: ");
-            contrasena = in.nextLine().trim();
-            c.setPassword(contrasena); 
+            do {
+                System.out.print("Contraseña: ");
+                contraseña = in.nextLine().trim();
+                if (controlador.getServiciosCredenciales().validarContraseña(contraseña) == false) {
+                    System.out.println("La contraseña debe tener al menos 8 caracteres e incluir al menos un carácter especial como un punto o una coma.");
+                } else {
+                    contraseñaValida = true;
+                    c.setPassword(contraseña);
+                }
+            } while (!contraseñaValida);
             correcto = controlador.getServiciosPersona().validarPersona(pers);
             if (!correcto) {
                 System.out.println("Los datos que has introducido no son correctos.");
@@ -386,14 +409,14 @@ public class FachadaAdmin {
             long idPersona = controlador.getServiciosPersona().insertar(pers);
             if (idPersona > 0) {
                 c.setIdPersona(idPersona);
-                int insertarCredenciales = controlador.getServiciosCredenciales().insertar(usuario, contrasena, idPersona);
+                int insertarCredenciales = controlador.getServiciosCredenciales().insertar(usuario, contraseña, idPersona);
                 if (insertarCredenciales > 0) {
                     System.out.println("Persona y sus credenciales insertadas correctamente.");
                 } else {
                     System.out.println("Error al insertar las credenciales en la base de datos.");
                 }
             } else {
-                System.out.println("Error al insertar la persona en la base de datos.");
+                System.out.println("Error al insertar la persona.");
             }
         } catch (Exception ex) {
             System.out.println("Error al insertar la persona nueva: " + ex.getMessage());

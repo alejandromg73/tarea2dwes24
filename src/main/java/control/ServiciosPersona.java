@@ -27,14 +27,26 @@ public class ServiciosPersona {
 			return personaDAO.emailExistente(email);
 		}
 		public boolean validarPersona(Persona pers) {
-	        if(pers.getNombre().isEmpty()) 
-	        	return false;
-	        if(pers.getNombre().length()<3 || pers.getNombre().length()>20)
-	        	return false;
-	        if(pers.getEmail().isEmpty())
-	        	return false;
-	        return true;
-	    }
+		    if(pers == null) {
+		        return false;
+		    }
+		    if(pers.getNombre() == null || pers.getNombre().isEmpty()) {
+		        return false;
+		    }
+		    if (pers.getNombre().length() < 3 || pers.getNombre().length() > 20) {
+		        return false;
+		    }
+		    if(pers.getEmail() == null || pers.getEmail().isEmpty()) {
+		        return false;
+		    }
+		    if(pers.getEmail().length() < 5 || !pers.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") || pers.getEmail().length() > 5){
+		        return false;
+		    }
+		    if (pers.getNombre().length()<3 || pers.getNombre().length()>40)
+		    	return false;
+		    
+		    return true;
+		}
 		public long IdUsuarioAutenticado(String usuario) {
 			return personaDAO.IdUsuarioAutenticado(usuario);
 		}

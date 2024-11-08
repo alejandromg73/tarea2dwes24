@@ -42,7 +42,7 @@ public ServiciosMensaje() {
 	        System.out.println("El mensaje es muy largo");
 	        return false;
 	    }
-		return false;
+		return true;
 	}
 	public ArrayList<Mensaje> verMensajesPorCodigoPlanta(String codigoPlanta) {
 		return mensajeDAO.verMensajesPorCodigoPlanta(codigoPlanta);
