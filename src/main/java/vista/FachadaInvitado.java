@@ -1,6 +1,7 @@
 package vista;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import control.Controlador;
@@ -28,6 +29,7 @@ public class FachadaInvitado {
             System.out.println("1. VER TODAS LAS PLANTAS");
             System.out.println("2. LOGUEARSE");
             System.out.println("3. SALIR DEL PROGRAMA");
+            try {
             opcion = in.nextInt();
             switch (opcion) {
                 case 1:
@@ -41,6 +43,11 @@ public class FachadaInvitado {
                     break;
                 default:
                     System.out.println("Opción incorrecta.");
+            }
+            }catch(InputMismatchException e){
+            	System.out.println("Debes ingresar un número.");
+            	in.nextLine();
+            	opcion = 0;
             }
         } while (opcion != 3);
     }

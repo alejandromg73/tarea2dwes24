@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import modelo.Ejemplar;
-import modelo.Planta;
 import utils.ConexionBD;
 
 	public class EjemplarDAO implements OperacionesCRUD<Ejemplar> {
@@ -30,7 +29,7 @@ import utils.ConexionBD;
 				ps.setString(2, ej.getCodigoPlanta());
 				return ps.executeUpdate();
 			} catch (SQLException e) {
-				System.out.println("Error al insertar en plantas " + e.getMessage());
+				System.out.println("Error al insertar el ejemplar " + e.getMessage());
 			}
 			return 0;
 		}
@@ -54,9 +53,8 @@ import utils.ConexionBD;
 		                resultado.getString("id_planta"));		            
 		            todos.add(ejemplar); 
 		        }
-		        conex.close();
 		    } catch (SQLException e) {
-		        System.out.println("Error al obtener todas las plantas: " + e.getMessage());
+		        System.out.println("Error al obtener todos los ejemplares: " + e.getMessage());
 		        e.printStackTrace();
 		    
 		    }

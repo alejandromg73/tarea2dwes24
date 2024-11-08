@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
-import modelo.Mensaje;
 import modelo.Planta;
 import utils.ConexionBD;
 

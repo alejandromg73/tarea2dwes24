@@ -2,6 +2,7 @@ package vista;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import control.Controlador;
@@ -34,6 +35,7 @@ public class FachadaAdmin {
             System.out.println("3. Gestión de mensajes.");
             System.out.println("4. Gestión de personas.");
             System.out.println("5. CERRAR SESIÓN.");
+            try {
             opcion = in.nextInt();
             if (opcion < 1 || opcion > 5) {
                 System.out.println("Opción incorrecta.");
@@ -53,7 +55,12 @@ public class FachadaAdmin {
                     menuAdminPersonas();
                     break;
             }
-        } while (opcion != 5);
+        }catch(InputMismatchException e){
+        	System.out.println("Debes ingresar un número.");
+        	in.nextLine();
+        	opcion = 0;
+        }
+    	} while (opcion != 5);
         Controlador.getServicios().cerrarSesion();
         FachadaInvitado.getPortalInvitado().menuInvitado();
     }
@@ -65,7 +72,7 @@ public class FachadaAdmin {
             System.out.println("2. Crear nueva planta.");
             System.out.println("3. Modificar datos de una planta.");
             System.out.println("4. Volver al menú principal.");
-
+            try {
             opcion = in.nextInt();
             if (opcion < 1 || opcion > 4) {
                 System.out.println("Opción incorrecta.");
@@ -82,6 +89,11 @@ public class FachadaAdmin {
                     menuAdminModificarPlantas();
                     break;
             }
+            }catch(InputMismatchException e) {
+            	System.out.println("Debes ingresar un número.");
+            	in.nextLine();
+            	opcion = 0;
+            }
         } while (opcion != 4);
     }
     public void menuAdminModificarPlantas() {
@@ -91,6 +103,7 @@ public class FachadaAdmin {
         System.out.println("1. Modificar nombre común.");
         System.out.println("2. Modificar nombre científico.");
         System.out.println("3. Volver al menú de plantas.");
+        try {
         opcion = in.nextInt();
         if (opcion < 1 || opcion > 3) {
             System.out.println("Opción incorrecta.");
@@ -105,6 +118,11 @@ public class FachadaAdmin {
                 break;
             
         }
+        }catch(InputMismatchException e) {
+        	System.out.println("Debes ingresar un número.");
+        	in.nextLine();
+        	opcion = 0;
+        }
     } while (opcion != 3);
     }
 
@@ -115,6 +133,7 @@ public class FachadaAdmin {
         System.out.println("1. Registrar nuevo ejemplar.");
         System.out.println("2. Filtrar ejemplares por tipo de planta.");
         System.out.println("3. Volver al menú principal.");
+        try {
         opcion = in.nextInt();
         if (opcion < 1 || opcion > 3) {
             System.out.println("Opción incorrecta.");
@@ -125,9 +144,14 @@ public class FachadaAdmin {
                 nuevoEjemplar();
                 break;
             case 2:
-                //Filtrar ejemplares por tipo de planta
+                FachadaPersonal.getPortalPersonal().filtrarEjemplaresPorCodigoPlanta();
                 break;
             
+        }
+        }catch(InputMismatchException e) {
+        	System.out.println("Debes ingresar un número.");
+        	in.nextLine();
+        	opcion = 0;
         }
     } while (opcion != 3);
     }
@@ -139,6 +163,7 @@ public class FachadaAdmin {
         System.out.println("1. Registrar nueva persona.");
         System.out.println("2. Ver todas las personas.");
         System.out.println("3. Volver al menú principal.");
+        try {
         opcion = in.nextInt();
         if (opcion < 1 || opcion > 3) {
             System.out.println("Opción incorrecta.");
@@ -153,6 +178,11 @@ public class FachadaAdmin {
                 break;
             
         }
+        }catch(InputMismatchException e) {
+        	System.out.println("Debes ingresar un número.");
+        	in.nextLine();
+        	opcion = 0;
+        }
     } while (opcion != 3);
     }
 
@@ -163,6 +193,7 @@ public class FachadaAdmin {
         System.out.println("1. Nuevo mensaje.");
         System.out.println("2. Ver mensajes.");
         System.out.println("3. Volver al menú principal.");
+        try {
         opcion = in.nextInt();
         if (opcion < 1 || opcion > 3) {
             System.out.println("Opción incorrecta.");
@@ -175,9 +206,13 @@ public class FachadaAdmin {
             case 2:
                 menuAdminVerMensajes();
                 break;
-            
         }
-    } while (opcion != 3);
+        }catch(InputMismatchException e) {
+        	System.out.println("Debes ingresar un número.");
+        	in.nextLine();
+        	opcion = 0;
+        }
+        } while (opcion != 3);
     }
     public void menuAdminVerMensajes() {
     	int opcion = 0;
@@ -188,6 +223,7 @@ public class FachadaAdmin {
         System.out.println("3. Ver mensajes por rango de fechas.");
         System.out.println("4. Ver mensajes por tipo de planta.");
         System.out.println("5. Volver al menú principal.");
+        try {
         opcion = in.nextInt();
         if (opcion < 1 || opcion > 5) {
             System.out.println("Opción incorrecta.");
@@ -201,18 +237,24 @@ public class FachadaAdmin {
                 FachadaPersonal.getPortalPersonal().verMensajesPersona();
                 break;
             case 3:
-                //VerMensajesFechas();
+                FachadaPersonal.getPortalPersonal().verMensajeFechas();
                 break;
             case 4:
-                //VerMensajesTipoPlanta();
+                FachadaPersonal.getPortalPersonal().verMensajeTipoPlanta();
                 break;
             
+        }
+        }catch(InputMismatchException e) {
+        	System.out.println("Debes ingresar un número.");
+        	in.nextLine();
+        	opcion = 0;
         }
     } while (opcion != 5);
     }
     
 
     public Planta nuevaPlanta() {
+    	in.nextLine();
         Planta p;
         boolean correcto = false;
         do {
@@ -252,6 +294,7 @@ public class FachadaAdmin {
     }
 
     public Ejemplar nuevoEjemplar() {
+    	in.nextLine();
         Ejemplar e;
         Mensaje m;
         boolean correcto = false;
@@ -291,6 +334,7 @@ public class FachadaAdmin {
         return e;
     }
     public Persona nuevaPersona() {
+    	in.nextLine();
         Persona pers;
         Credenciales c;
         boolean correcto = false;
@@ -364,8 +408,10 @@ public class FachadaAdmin {
             return;
         }
         System.out.println("Todas las personas: ");
+        System.out.println();
         for (Persona pers : personas) {
             System.out.println(pers);
+            System.out.println();
         }
     }
     public void verTodosMensajes() {
@@ -381,9 +427,10 @@ public class FachadaAdmin {
     }
     
     public void modificarNombreComun() {
+    	in.nextLine();
     	    boolean valido = false;
     	    String codigo = "";
-    	    
+    	    boolean existe = false;
     	    do {
     	        System.out.print("Introduce el código de la planta de la que quieres modificar el nombre común: ");
     	        codigo = in.nextLine().trim().toUpperCase();
@@ -392,6 +439,10 @@ public class FachadaAdmin {
     	            System.out.println("El código de la planta que has introducido no es válido");
     	        }
     	    } while (valido==false);
+    	    existe = controlador.getServiciosPlanta().codigoExistente(codigo);
+    	    if (existe==false) {
+                System.out.println("El código de la planta que has introducido no existe en la base de datos");
+            }
     	    System.out.print("Introduce el nuevo nombre común de la planta: ");
     	    String nuevoNombreComun = in.nextLine().trim().toUpperCase();
     	    try {
@@ -407,6 +458,7 @@ public class FachadaAdmin {
     }
     
     public void modificarNombreCientifico() {
+    	in.nextLine();
     	boolean valido = false;
     	boolean existe = false;
 	    String codigo = "";

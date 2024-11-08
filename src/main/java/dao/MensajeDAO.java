@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,8 +14,6 @@ import utils.ConexionBD;
 
 public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 	Connection conex;
-	private PreparedStatement ps;
-	private ResultSet rs;
 
 
 	public MensajeDAO(Connection conex) {
@@ -82,7 +81,28 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 	    return mensajesPlanta;
 	}
 	
-	
+	public ArrayList<Mensaje> verMensajesFecha(LocalDateTime primeraFecha, LocalDateTime segundaFecha) {
+	    String consulta = "SELECT mensajes.id, fechahora, mensaje, mensajes.idejemplar, mensajes.idpersona " +"FROM mensajes " +
+	                      "WHERE fechahora BETWEEN ? AND ?";
+	    ArrayList<Mensaje> mensajes = new ArrayList<>();
+	    try (PreparedStatement ps = conex.prepareStatement(consulta)) {
+	        ps.setTimestamp(1, Timestamp.valueOf(primeraFecha));
+	        ps.setTimestamp(2, Timestamp.valueOf(segundaFecha));
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                Mensaje m = new Mensaje();
+	                m.setFechaHora(rs.getTimestamp("fechahora").toLocalDateTime());
+	                m.setMensaje(rs.getString("mensaje"));
+	                m.setIdEjemplar(rs.getLong("idejemplar"));
+	                m.setIdPersona(rs.getLong("idpersona"));
+	                mensajes.add(m);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error al ver los mensajes: " + e.getMessage());
+	    }
+	    return mensajes;
+	}
 
 
 	@Override
@@ -105,7 +125,6 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 	            );
 	            todos.add(mensaje); 
 	        }
-	        conex.close();
 	    } catch (SQLException e) {
 	        System.out.println("Error al obtener todas las plantas: " + e.getMessage());
 	        e.printStackTrace();

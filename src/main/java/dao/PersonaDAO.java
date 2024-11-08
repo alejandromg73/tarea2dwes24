@@ -59,11 +59,7 @@ public class PersonaDAO implements OperacionesCRUD<Persona> {
 
 
 	
-	public Persona buscarPorID(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 
 	@Override
 	public Collection<Persona> verTodos() {
@@ -82,7 +78,7 @@ public class PersonaDAO implements OperacionesCRUD<Persona> {
 	                resultado.getString("email"));		            
 	            todas.add(persona); 
 	        }
-	        conex.close();
+	        
 	    } catch (SQLException e) {
 	        System.out.println("Error al obtener todas las personas: " + e.getMessage());
 	        e.printStackTrace();

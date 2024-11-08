@@ -1,6 +1,8 @@
 package vista;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -8,7 +10,6 @@ import java.util.Scanner;
 import control.Controlador;
 import modelo.Ejemplar;
 import modelo.Mensaje;
-import modelo.Planta;
 
 public class FachadaPersonal {
 	private static FachadaPersonal portalPersonal;
@@ -36,7 +37,7 @@ public class FachadaPersonal {
 			System.out.println("2. Gestión de ejemplares.");
 			System.out.println("3. Gestión de mensajes.");
 			System.out.println("4. CERRAR SESIÓN.");
-
+			try {
 			opcion = in.nextInt();
 			if (opcion < 1 || opcion > 4) {
 				System.out.println("Opción incorrecta.");
@@ -54,6 +55,11 @@ public class FachadaPersonal {
 				break;
 
 			}
+			}catch(InputMismatchException e){
+            	System.out.println("Debes ingresar un número.");
+            	in.nextLine();
+            	opcion = 0;
+            }
 		} while (opcion != 4);
 		Controlador.getServicios().cerrarSesion();
 		FachadaInvitado.getPortalInvitado().menuInvitado();
@@ -66,6 +72,7 @@ public class FachadaPersonal {
 			System.out.println("1. Registrar nuevo ejemplar.");
 			System.out.println("2. Filtrar ejemplares por tipo de planta.");
 			System.out.println("3. Volver al menú principal.");
+			try {
 			opcion = in.nextInt();
 			if (opcion < 1 || opcion > 3) {
 				System.out.println("Opción incorrecta.");
@@ -80,6 +87,11 @@ public class FachadaPersonal {
 				break;
 
 			}
+			}catch(InputMismatchException e){
+            	System.out.println("Debes ingresar un número.");
+            	in.nextLine();
+            	opcion = 0;
+            }
 		} while (opcion != 3);
 	}
 
@@ -93,6 +105,7 @@ public class FachadaPersonal {
 			System.out.println("4. Ver mensajes por rango de fechas.");
 			System.out.println("5. Ver mensajes por tipo de planta.");
 			System.out.println("6. Volver al menú principal.");
+			try {
 			opcion = in.nextInt();
 			if (opcion < 1 || opcion > 6) {
 				System.out.println("Opción incorrecta.");
@@ -109,13 +122,18 @@ public class FachadaPersonal {
 				verMensajesPersona();
 				break;
 			case 4:
-				// verMensajesFechas();
+				verMensajeFechas();
 				break;
 			case 5:
-				// verMensajesTipoPlanta();
+				 verMensajeTipoPlanta();
 				break;
 
 			}
+			}catch(InputMismatchException e){
+            	System.out.println("Debes ingresar un número.");
+            	in.nextLine();
+            	opcion = 0;
+            }
 		} while (opcion != 6);
 	}
 
@@ -132,14 +150,14 @@ public class FachadaPersonal {
 	}
 
 	public void nuevoMensaje() {
-		Scanner in = new Scanner(System.in);
 		Mensaje nuevoMensaje = null;
 		int idEjemplar = 0;
 		boolean correcto = false;
 		do {
 			try {
 				verTodosEjemplares();
-				System.out.println("Introduce el id del ejemplar: ");
+				System.out.println();
+				System.out.println("Introduce el id del ejemplar para ponerle un mensaje: ");
 				idEjemplar = in.nextInt();
 				in.nextLine();
 				if (idEjemplar < 1 || idEjemplar > controlador.getServiciosEjemplar().contarEjemplares()) {
@@ -206,8 +224,10 @@ public class FachadaPersonal {
 				System.out.println("No se encontraron mensajes para la persona: " + idPersona);
 			} else {
 				System.out.println("Mensajes:");
+				System.out.println();
 				for (Mensaje m : mensajes) {
 					System.out.println(m);
+					System.out.println();
 				}
 			}
 		} catch (InputMismatchException e) {
@@ -244,5 +264,51 @@ public class FachadaPersonal {
 	        System.out.println("Se produjo un error al intentar obtener los mensajes: " + e.getMessage());
 	    }
 	}
-
+	
+	public void verMensajeFechas() {
+		in.nextLine();
+		    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+		    LocalDateTime fechaInicio = null;
+		    LocalDateTime fechaFin = null;
+		    while (fechaInicio == null) {
+		        try {
+		            System.out.print("Introduce la primera fecha con el formato: dd-MM-yyyy HH:mm ");
+		            String fechaInicioIntro = in.nextLine();
+		            fechaInicio = LocalDateTime.parse(fechaInicioIntro, formatter);
+		        } catch (DateTimeParseException e) {
+		            System.out.println("Formato de fecha no válido.");
+		        }
+		    }
+		    while (fechaFin == null) {
+		        try {
+		            System.out.print("Introduce la segunda fecha con el formato: dd-MM-yyyy HH:mm ");
+		            String fechaFinIntro = in.nextLine();
+		            fechaFin = LocalDateTime.parse(fechaFinIntro, formatter);
+		            if (fechaFin.isBefore(fechaInicio)) {
+		                System.out.println("La fecha de fin no puede ser anterior a la fecha de inicio.");
+		                fechaFin = null;
+		            }
+		        } catch (DateTimeParseException e) {
+		            System.out.println("Formato de fecha no válido.");
+		        }
+		    }
+		    ArrayList<Mensaje> mensajes = controlador.getServiciosMensaje().verMensajesFecha(fechaInicio, fechaFin);
+		    if (mensajes.isEmpty()) {
+		        System.out.println("No se encontraron mensajes en el rango de fechas proporcionado.");
+		    } else {
+		        System.out.println("Mensajes encontrados:");
+		        for (Mensaje m : mensajes) {
+		            System.out.println("ID: " + m.getId());
+		            System.out.println("Fecha: " + m.getFechaHora());
+		            System.out.println("Mensaje: " + m.getMensaje());
+		            System.out.println("ID Ejemplar: " + m.getIdEjemplar());
+		            System.out.println("ID Persona: " + m.getIdPersona());
+		            System.out.println("-------------");
+		        }
+		    }
+	}
 }
+		
+	
+
+

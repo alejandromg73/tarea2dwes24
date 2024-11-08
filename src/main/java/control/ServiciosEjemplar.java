@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import dao.EjemplarDAO;
 import modelo.Ejemplar;
-import modelo.Planta;
 import utils.ConexionBD;
 
 public class ServiciosEjemplar {

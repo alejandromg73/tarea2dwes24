@@ -22,9 +22,7 @@ public class ServiciosPersona {
 		public Collection<Persona> verTodos(){
 			return personaDAO.verTodos();
 		}
-		public Persona buscarPorID(long id) {
-			return personaDAO.buscarPorID(id);
-		}
+		
 		public boolean emailExistente(String email) {
 			return personaDAO.emailExistente(email);
 		}

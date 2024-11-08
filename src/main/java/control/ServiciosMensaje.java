@@ -1,5 +1,6 @@
 package control;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -21,7 +22,9 @@ public ServiciosMensaje() {
 	}
 	
 
-	
+	public ArrayList<Mensaje> verMensajesFecha(LocalDateTime primeraFecha, LocalDateTime segundaFecha) {
+		return mensajeDAO.verMensajesFecha(primeraFecha, segundaFecha);
+	}
 	
 	public Collection<Mensaje> verTodos(){
 		return mensajeDAO.verTodos();

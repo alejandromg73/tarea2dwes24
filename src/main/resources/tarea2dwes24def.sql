@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2024 a las 10:53:47
+-- Tiempo de generación: 08-11-2024 a las 10:43:45
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -36,6 +36,15 @@ CREATE TABLE `credenciales` (
   `idPersona` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `credenciales`
+--
+
+INSERT INTO `credenciales` (`id`, `usuario`, `password`, `idPersona`) VALUES
+(1, 'admin', 'admin', 0),
+(2, 'alejandro', 'alejandro', 2),
+(4, 'luis', 'luis', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +56,13 @@ CREATE TABLE `ejemplares` (
   `nombre` varchar(25) NOT NULL,
   `id_planta` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ejemplares`
+--
+
+INSERT INTO `ejemplares` (`id`, `nombre`, `id_planta`) VALUES
+(1, 'ROSA_1', 'ROSA');
 
 -- --------------------------------------------------------
 
@@ -62,6 +78,13 @@ CREATE TABLE `mensajes` (
   `idpersona` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `mensajes`
+--
+
+INSERT INTO `mensajes` (`id`, `fechahora`, `mensaje`, `idejemplar`, `idpersona`) VALUES
+(1, '2024-11-08 10:43:00', 'Añadido el ejemplar 1', 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -74,6 +97,15 @@ CREATE TABLE `personas` (
   `email` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `personas`
+--
+
+INSERT INTO `personas` (`id`, `nombre`, `email`) VALUES
+(0, 'admin', 'admin@admin.com'),
+(2, 'Alejandro', 'alejandromg73@educastur.es'),
+(3, 'Luis', 'luis@educastur.es');
+
 -- --------------------------------------------------------
 
 --
@@ -85,6 +117,16 @@ CREATE TABLE `plantas` (
   `nombrecomun` varchar(100) NOT NULL,
   `nombrecientifico` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `plantas`
+--
+
+INSERT INTO `plantas` (`codigo`, `nombrecomun`, `nombrecientifico`) VALUES
+('GIRASOL', 'Girasol', 'Helianthus annuus'),
+('MARGARITA', 'Margarita', 'Bellis perennis'),
+('ROSA', 'Rosa', 'Rosa Rosae'),
+('TULIPAN', 'Tulipan', 'Tulipa spp');
 
 --
 -- Índices para tablas volcadas
@@ -134,25 +176,25 @@ ALTER TABLE `plantas`
 -- AUTO_INCREMENT de la tabla `credenciales`
 --
 ALTER TABLE `credenciales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `ejemplares`
 --
 ALTER TABLE `ejemplares`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas

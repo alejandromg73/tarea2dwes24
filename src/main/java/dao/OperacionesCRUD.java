@@ -8,8 +8,4 @@ public interface OperacionesCRUD<T> {
 
 	public Collection<T> verTodos();
 
-
-	
-	
-
 }

@@ -34,10 +34,10 @@ public class CredencialesDAO {
     }
 
 	public boolean usuarioExistente(String usuario) {
-		String usuarioExistente = "SELECT usuario FROM CREDENCIALES";
+		String consulta = "SELECT usuario FROM CREDENCIALES";
 		ArrayList<String> usuariosExistentes = new ArrayList<String>();
 		try {
-			ps = conex.prepareStatement(usuarioExistente);
+			ps = conex.prepareStatement(consulta);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				usuariosExistentes.add(rs.getString(1));
@@ -45,7 +45,7 @@ public class CredencialesDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if (usuarioExistente.contains(usuario)) {
+		if (consulta.contains(usuario)) {
 			return true;
 		} else {
 			return false;
