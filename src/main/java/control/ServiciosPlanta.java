@@ -38,6 +38,14 @@ public ServiciosPlanta() {
 		return plantaDAO.codigoExistente(codigo);
 	}
 	
+	/**
+	 * Método para ver validar una planta
+	 * 
+	 * 
+	 * @param Un objeto de tipo planta que se quiere validar
+	 * @return True si se ha validado, false si no se ha validado
+	 *
+	 */
 	public boolean validarPlanta(Planta p) {
         if(p.getCodigo().isEmpty()) 
         	return false;
@@ -56,6 +64,14 @@ public ServiciosPlanta() {
         	return false;
         return true;
     }
+	/**
+	 * Método para ver validar el código de una planta 
+	 * 
+	 * 
+	 * @param Un codigo que se quiere validar
+	 * @return True si se ha validado, false si no se ha validado
+	 *
+	 */
 	public boolean validarCodigo(String codigo) {
 	    if (codigo == null ||codigo.isEmpty()) {
 	        return false;

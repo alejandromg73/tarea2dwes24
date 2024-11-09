@@ -32,7 +32,21 @@ public ServiciosMensaje() {
 	public ArrayList<Mensaje> verMensajesPorPersona(long idPersona) {
 		return mensajeDAO.verMensajesPorPersona(idPersona);
 	}
+	public ArrayList<Mensaje> verMensajesPorCodigoPlanta(String codigoPlanta) {
+		return mensajeDAO.verMensajesPorCodigoPlanta(codigoPlanta);
+	}
+	public ArrayList<Mensaje> verMensajesPorEjemplar(long idEjemplar) {
+		return mensajeDAO.verMensajesPorEjemplar(idEjemplar);
+	}
 
+	/**
+	 * Método para ver validar un mensaje introducido por teclado
+	 * 
+	 * 
+	 * @param Un mensaje que se quiere validar
+	 * @return True si se ha validado, false si no se ha validado
+	 *
+	 */
 	public boolean validarMensaje(String mensaje) {
 		if (mensaje ==null || mensaje.trim().isEmpty()) {
 	        System.out.println("El mensaje está vacio.");
@@ -44,7 +58,5 @@ public ServiciosMensaje() {
 	    }
 		return true;
 	}
-	public ArrayList<Mensaje> verMensajesPorCodigoPlanta(String codigoPlanta) {
-		return mensajeDAO.verMensajesPorCodigoPlanta(codigoPlanta);
-	}
+	
 }

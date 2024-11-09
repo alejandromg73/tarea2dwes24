@@ -72,10 +72,11 @@ public class FachadaPersonal {
 			System.out.println("Selecciona una opción:");
 			System.out.println("1. Registrar nuevo ejemplar.");
 			System.out.println("2. Filtrar ejemplares por tipo de planta.");
-			System.out.println("3. Volver al menú principal.");
+			System.out.println("3. Ver mensajes de un ejemplar.");
+			System.out.println("4. Volver al menú principal.");
 			try {
 			opcion = in.nextInt();
-			if (opcion < 1 || opcion > 3) {
+			if (opcion < 1 || opcion > 4) {
 				System.out.println("Opción incorrecta.");
 				continue;
 			}
@@ -86,14 +87,15 @@ public class FachadaPersonal {
 			case 2:
 				filtrarEjemplaresPorCodigoPlanta();
 				break;
-
+			case 3:
+				FachadaAdmin.getPortalAdmin().verMensajesEjemplar();
 			}
 			}catch(InputMismatchException e){
             	System.out.println("Debes ingresar un número.");
             	in.nextLine();
             	opcion = 0;
             }
-		} while (opcion != 3);
+		} while (opcion != 4);
 	}
 
 	public void menuPersonalMensajes() {
@@ -149,7 +151,10 @@ public class FachadaPersonal {
 			System.out.println(e);
 		}
 	}
-
+	/**
+	 * Método para crear un nuevo mensaje sobre un ejemplar de la base de datos.
+	 * Primero se muestran todos para que el usuario elija
+	 */
 	public void nuevoMensaje() {
 		Mensaje nuevoMensaje = null;
 		int idEjemplar = 0;
@@ -191,7 +196,7 @@ public class FachadaPersonal {
 			}
 		} while (!correcto);
 	}
-
+	
 	public void filtrarEjemplaresPorCodigoPlanta() {
 		try {
 			System.out.print("Introduce el código de la planta para ver los ejemplares: ");

@@ -88,7 +88,13 @@ public class PlantaDAO implements OperacionesCRUD<Planta> {
 		    return todas;
 		}
 		
-
+		/**
+		 * Método para actualizar el nombre común de una planta
+		 * 
+		 * @param Un codigo de planta y un nombre común
+		 * @return true si se cambia, false si no
+		 *
+		 */
 		public boolean actualizarNombreComun(String codigo, String nombreComun) {
 		    String consulta = "UPDATE plantas SET nombrecomun = ? WHERE codigo = ?";
 		    try (Connection connection = ConexionBD.getConexion(); 
@@ -102,6 +108,13 @@ public class PlantaDAO implements OperacionesCRUD<Planta> {
 		        return false;
 		    }
 		}
+		/**
+		 * Método para actualizar el nombre cientifico de una planta
+		 * 
+		 * @param Un codigo de planta y un nombre cientifico
+		 * @return true si se cambia, false si no
+		 *
+		 */
 		public boolean actualizarNombreCientifico(String codigo, String nombreCientifico) {
 		    String consulta = "UPDATE plantas SET nombrecientifico = ? WHERE codigo = ?";
 		    try (Connection connection = ConexionBD.getConexion(); 
@@ -115,6 +128,13 @@ public class PlantaDAO implements OperacionesCRUD<Planta> {
 		        return false;
 		    }
 		}
+		/**
+		 * Método para comprobar si existe el código de una planta
+		 * 
+		 * @param Un codigo de planta
+		 * @return true si existe, false si no
+		 *
+		 */
 		public boolean codigoExistente(String codigo) {
 			String consulta = "SELECT codigo FROM PLANTAS";
 			ArrayList<String> cod = new ArrayList<String>();

@@ -51,6 +51,11 @@ public class FachadaInvitado {
             }
         } while (opcion != 3);
     }
+    
+    /**Método para hacer login en el programa. Compara si las credenciales que ha introducido el usuario
+     * son iguales que las que hay almacenadas en la base de datos, y en función de eso dirige al programa a 
+     * la fachada de administrador o a la de personal (si el login falla, te devuelve al menú de invitado)
+     */
     public void login() {
         in.nextLine();
         System.out.print("Introduce usuario: ");

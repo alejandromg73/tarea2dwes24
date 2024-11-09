@@ -35,7 +35,14 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 		}
 		return filas;
 	}
-
+	/**
+	 * Método para ver los mensajes insertados por una persona
+	 * 
+	 * 
+	 * @param Un id de persona
+	 * @return Un ArrayList de mensajes con los mensajes de esa persona
+	 *
+	 */
 	public ArrayList<Mensaje> verMensajesPorPersona(long idPersona) {
 	    ArrayList<Mensaje> mensajesPersona = new ArrayList<>();
 	    String consulta = "SELECT * FROM mensajes WHERE idpersona = ?";
@@ -57,6 +64,14 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 	    }
 	    return mensajesPersona;
 	}
+	/**
+	 * Método para ver los mensajes insertados según el codigo de la planta
+	 * 
+	 * 
+	 * @param Un codigo de planta
+	 * @return Un ArrayList de mensajes con los mensajes de ese codigo de planta
+	 *
+	 */
 	public ArrayList<Mensaje> verMensajesPorCodigoPlanta(String codigoPlanta) {
 	    String consulta = "SELECT mensajes.id, fechahora, mensaje, mensajes.idejemplar, mensajes.idpersona " +
 	           "FROM mensajes " +"INNER JOIN ejemplares ON mensajes.idejemplar = ejemplares.id " + "INNER JOIN plantas ON ejemplares.id_planta = plantas.codigo " +
@@ -80,6 +95,14 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 	    }
 	    return mensajesPlanta;
 	}
+	/**
+	 * Método para ver los mensajes insertados dentro de un rango de fechas
+	 * 
+	 * 
+	 * @param Dos fechas (LocalDateTime)
+	 * @return Un ArrayList de mensajes con los mensajes en esas fechas
+	 *
+	 */
 	
 	public ArrayList<Mensaje> verMensajesFecha(LocalDateTime primeraFecha, LocalDateTime segundaFecha) {
 	    String consulta = "SELECT mensajes.id, fechahora, mensaje, mensajes.idejemplar, mensajes.idpersona " +"FROM mensajes " +
@@ -134,6 +157,38 @@ public class MensajeDAO implements OperacionesCRUD<Mensaje> {
 	    return todos;
 
 	}
+	/**
+	 * Método para ver los mensajes insertados para un ejemplar concreto
+	 * 
+	 * 
+	 * @param Un id de ejemplar
+	 * @return Un ArrayList de mensajes con los mensajes para ese ejemplar
+	 *
+	 */
+	public ArrayList<Mensaje> verMensajesPorEjemplar(long idEjemplar) {
+	    String consulta = "SELECT id, fechahora, mensaje, idejemplar, idpersona " +
+	                      "FROM mensajes " + "WHERE idejemplar = ? " +
+	                        "ORDER BY fechahora";
+	    ArrayList<Mensaje> mensajes = new ArrayList<>();
+	    try (PreparedStatement ps = conex.prepareStatement(consulta)) {
+	        ps.setLong(1, idEjemplar);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                Mensaje m = new Mensaje();
+	                m.setId(rs.getLong("id"));
+	                m.setFechaHora(rs.getTimestamp("fechahora").toLocalDateTime());
+	                m.setMensaje(rs.getString("mensaje"));
+	                m.setIdEjemplar(rs.getLong("idejemplar"));
+	                m.setIdPersona(rs.getLong("idpersona"));
+	                mensajes.add(m);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error al obtener los mensajes del ejemplar: " + e.getMessage());
+	    }
+	    return mensajes;
+	}
+
 
 
 

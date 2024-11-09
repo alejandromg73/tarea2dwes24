@@ -41,14 +41,23 @@ import utils.ConexionBD;
 		    }
 		    return id;
 		}
-
+		/**
+		 * Método para cambiar el nombre de un ejemplar.
+		 * Este método es necesario, puesto que al crear un nuevo ejemplar hay que asignarle un nombre para insertarlo en la base
+		 * de datos, pero tras insertarlo, hacemos una llamada a este método para poder ponerle el nombre
+		 * que queremos a los ejemplares (CODIGO PLANTA + _ + ID)
+		 * 
+		 * @param Un id de ejemplar y un nombre nuevo
+		 * @return true si se cambia, false si no
+		 *
+		 */
 		public boolean cambiarNombre(long idEjemplar, String nuevoNombre) {
 		    String consulta = "UPDATE ejemplares SET nombre = ? WHERE id = ?";
 		    try (PreparedStatement ps = conex.prepareStatement(consulta)) {
 		        ps.setString(1, nuevoNombre);
 		        ps.setLong(2, idEjemplar);
-		        int filasActualizadas = ps.executeUpdate();
-		        return filasActualizadas > 0;
+		        int filas = ps.executeUpdate();
+		        return filas > 0;
 		    } catch (SQLException e) {
 		        System.out.println("Error al actualizar el nombre del ejemplar: " + e.getMessage());
 		    }
@@ -82,6 +91,14 @@ import utils.ConexionBD;
 		    
 		    return todos;
 		}
+		/**
+		 * Este método cuenta el número de ejemplares en la base de datos, y nos resulta muy útil
+		 * para hacer validaciones y no pasarnos de rango al  seleccionar id ejemplar
+		 * 
+		 * 
+		 * @return numero de ejemplares
+		 *
+		 */
 		public int contarEjemplares() {
 	        String consulta = "SELECT COUNT(*) FROM ejemplares";
 	        try (PreparedStatement ps = conex.prepareStatement(consulta);
@@ -113,7 +130,13 @@ import utils.ConexionBD;
 
 	        return ejemplar;
 		}
-		
+		/**
+		 * Método para buscar ejemplares según el tipo de planta
+		 * 
+		 * @param Un codigo de planta
+		 * @return un ArrayList de ejemplares
+		 *
+		 */
 		public ArrayList<Ejemplar> ejemplaresPorTipoPlanta(String codigoPlanta) {
 		    String consulta = "SELECT * FROM ejemplares WHERE id_planta = ?";
 		    ArrayList<Ejemplar> ej = new ArrayList<>();

@@ -133,10 +133,11 @@ public class FachadaAdmin {
         System.out.println("Selecciona una opción:");
         System.out.println("1. Registrar nuevo ejemplar.");
         System.out.println("2. Filtrar ejemplares por tipo de planta.");
-        System.out.println("3. Volver al menú principal.");
+        System.out.println("3. Ver mensajes de un ejemplar.");
+        System.out.println("4. Volver al menú principal.");
         try {
         opcion = in.nextInt();
-        if (opcion < 1 || opcion > 3) {
+        if (opcion < 1 || opcion > 4) {
             System.out.println("Opción incorrecta.");
             continue;
         }
@@ -147,6 +148,8 @@ public class FachadaAdmin {
             case 2:
                 FachadaPersonal.getPortalPersonal().filtrarEjemplaresPorCodigoPlanta();
                 break;
+            case 3:
+            	verMensajesEjemplar();
             
         }
         }catch(InputMismatchException e) {
@@ -154,7 +157,7 @@ public class FachadaAdmin {
         	in.nextLine();
         	opcion = 0;
         }
-    } while (opcion != 3);
+    } while (opcion != 4);
     }
 
     public void menuAdminPersonas() {
@@ -253,7 +256,10 @@ public class FachadaAdmin {
     } while (opcion != 5);
     }
     
-
+    /**
+     * Método para crear una nueva planta, con sus validaciones y controlando las excepciones que pueden surgir
+     * 
+     */
     public Planta nuevaPlanta() {
         in.nextLine();
         Planta p;
@@ -303,7 +309,10 @@ public class FachadaAdmin {
         return p;
     }
 
-
+    /**
+     * Método para crear un nuevo ejemplar, con sus validaciones y controlando las excepciones que pueden surgir
+     * 
+     */
     public Ejemplar nuevoEjemplar() {
         in.nextLine(); 
         Ejemplar e;
@@ -326,6 +335,7 @@ public class FachadaAdmin {
             long idEjemplar = controlador.getServiciosEjemplar().insertar(e);
             if (idEjemplar > 0) {
                 e.setId(idEjemplar);
+                //Llamando al método de cambiar el nombre, le aplicamos el que se requiere para los ejemplares
                 e.setNombre(e.getCodigoPlanta() + "_" + idEjemplar);
                 System.out.println("Ejemplar insertado con ID: " + idEjemplar);
                 controlador.getServiciosEjemplar().cambiarNombre(e.getId(), e.getNombre());
@@ -333,6 +343,7 @@ public class FachadaAdmin {
                 LocalDateTime fechaHora = LocalDateTime.now();
                 String usuarioAutenticado = controlador.getUsuarioAutenticado();
                 long idUsuario = controlador.getServiciosPersona().IdUsuarioAutenticado(usuarioAutenticado);
+                //A la vez que la insercción del ejemplar, se genera un mensaje
                 m = new Mensaje(fechaHora, mensaje, idEjemplar, idUsuario);
                 if (controlador.getServiciosMensaje().insertar(m) > 0) {
                     System.out.println("Mensaje añadido correctamente.");
@@ -347,7 +358,10 @@ public class FachadaAdmin {
         }
         return e;
     }
-
+    /**
+     * Método para crear una nueva planta, con sus validaciones y controlando las excepciones que pueden surgir
+     * 
+     */
     public Persona nuevaPersona() {
         in.nextLine();
         Persona pers;
@@ -393,6 +407,7 @@ public class FachadaAdmin {
             do {
                 System.out.print("Contraseña: ");
                 contraseña = in.nextLine().trim();
+                //Una pequeña medida de seguridad para las credenciales que he decidido introducir
                 if (controlador.getServiciosCredenciales().validarContraseña(contraseña) == false) {
                     System.out.println("La contraseña debe tener al menos 8 caracteres e incluir al menos un carácter especial como un punto o una coma.");
                 } else {
@@ -409,6 +424,7 @@ public class FachadaAdmin {
             long idPersona = controlador.getServiciosPersona().insertar(pers);
             if (idPersona > 0) {
                 c.setIdPersona(idPersona);
+                //Cuando se inserta una persona, se generan sus credenciales asociadas
                 int insertarCredenciales = controlador.getServiciosCredenciales().insertar(usuario, contraseña, idPersona);
                 if (insertarCredenciales > 0) {
                     System.out.println("Persona y sus credenciales insertadas correctamente.");
@@ -471,7 +487,7 @@ public class FachadaAdmin {
     	    try {
     	        boolean nuevo = controlador.getServiciosPlanta().actualizarNombreComun(codigo, nuevoNombreComun);
     	        if (nuevo==true) {
-    	            System.out.println("El nombre común de la planta con código " + codigo + "ha sido actualizado, ahora el nombre es:" + nuevoNombreComun);
+    	            System.out.println("El nombre común de la planta con código " + codigo + " ha sido actualizado, ahora el nombre es: " + nuevoNombreComun);
     	        } else {
     	            System.out.println("Error al intentar actualizar el nombre común");
     	        }
@@ -503,7 +519,7 @@ public class FachadaAdmin {
 	    try {
 	        boolean nuevo = controlador.getServiciosPlanta().actualizarNombreCientifico(codigo, nuevoNombreCientifico);
 	        if (nuevo == true) {
-	            System.out.println("El nombre cientifico de la planta con código " + codigo + "ha sido actualizado, ahora el nombre es" + nuevoNombreCientifico);
+	            System.out.println("El nombre cientifico de la planta con código " + codigo + " ha sido actualizado, ahora el nombre es: " + nuevoNombreCientifico);
 	        } else {
 	            System.out.println("Error al intentar actualizar el nombre cientifico");
 	        }
@@ -511,6 +527,28 @@ public class FachadaAdmin {
 	        System.out.println("Error al actualizar el nombre cientifico: " + ex.getMessage());
 	    }
 
+    }
+
+    public void verMensajesEjemplar() {
+        System.out.print("Introduce el id de un ejemplar para ver sus mensajes: ");
+        try {
+            long idEjemplar = in.nextLong();
+            if (idEjemplar < 1 || idEjemplar > controlador.getServiciosEjemplar().contarEjemplares()) {
+                System.out.println("Debes introducir un número entre el 1 y " + controlador.getServiciosEjemplar().contarEjemplares());
+                return; 
+            }
+            ArrayList<Mensaje> mensajes = controlador.getServiciosMensaje().verMensajesPorEjemplar(idEjemplar);
+            if (mensajes.isEmpty()) {
+                System.out.println("No se encontraron mensajes para el ejemplar");
+            } else {
+                System.out.println("Mensajes del ejemplar con ID: " + idEjemplar + ":");
+                for (Mensaje m : mensajes) {
+                    System.out.println(m);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al intentar obtener los mensajes del ejemplar: " + e.getMessage());
+        }
     }
 }
 

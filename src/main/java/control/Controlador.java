@@ -2,6 +2,7 @@
 
 public class Controlador {
 	private static Controlador servicios;
+	//Esta variable de usuarioAutenticado sirve para llevar control de quien está logueado en el programa
 	private String usuarioAutenticado;
 	private ServiciosPlanta servPlanta;
 	private ServiciosEjemplar servEjemplar;
@@ -49,6 +50,9 @@ public class Controlador {
     public String getUsuarioAutenticado() {
         return usuarioAutenticado;
     }
+    /**
+     * Este método sirve para cerrar sesión, ya que pone la variable de usuario autenticado a nulo
+     */
     public void cerrarSesion() {
         this.usuarioAutenticado = null;
     }

@@ -26,6 +26,18 @@ public class ServiciosPersona {
 		public boolean emailExistente(String email) {
 			return personaDAO.emailExistente(email);
 		}
+
+		public long IdUsuarioAutenticado(String usuario) {
+			return personaDAO.IdUsuarioAutenticado(usuario);
+		}
+		/**
+		 * Método para ver validar una persona
+		 * 
+		 * 
+		 * @param Un objeto de tipo persona que se quiere validar
+		 * @return True si se ha validado, false si no se ha validado
+		 *
+		 */
 		public boolean validarPersona(Persona pers) {
 		    if(pers == null) {
 		        return false;
@@ -39,7 +51,7 @@ public class ServiciosPersona {
 		    if(pers.getEmail() == null || pers.getEmail().isEmpty()) {
 		        return false;
 		    }
-		    if(pers.getEmail().length() < 5 || !pers.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") || pers.getEmail().length() > 5){
+		    if(pers.getEmail().length() < 5 || !pers.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$") || pers.getEmail().length() > 40){
 		        return false;
 		    }
 		    if (pers.getNombre().length()<3 || pers.getNombre().length()>40)
@@ -47,8 +59,6 @@ public class ServiciosPersona {
 		    
 		    return true;
 		}
-		public long IdUsuarioAutenticado(String usuario) {
-			return personaDAO.IdUsuarioAutenticado(usuario);
-		}
+		
 }
 

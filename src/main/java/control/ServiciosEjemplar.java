@@ -31,15 +31,7 @@ public class ServiciosEjemplar {
 	public Ejemplar buscarPorID(long id) {
 		return ejemplarDAO.buscarPorID(id);
 	}
-
-	public boolean validarEjemplar(Ejemplar e) {
-		if (e.getCodigoPlanta().isEmpty())
-			return false;
-		if (e.getCodigoPlanta().length() < 3 || e.getCodigoPlanta().length() > 20)
-			return false;
-
-		return true;
-	}
+	
 
 	public int contarEjemplares() {
 		return ejemplarDAO.contarEjemplares();
@@ -47,6 +39,21 @@ public class ServiciosEjemplar {
 
 	public ArrayList<Ejemplar> ejemplaresPorTipoPlanta(String codigo) {
 		return ejemplarDAO.ejemplaresPorTipoPlanta(codigo);
+	}
+	/**
+	 * Método para ver validar un ejemplar
+	 * 
+	 * 
+	 * @param Un objeto de tipo ejmplar que se quiere validar
+	 * @return True si se ha validado, false si no se ha validado
+	 *
+	 */
+	public boolean validarEjemplar(Ejemplar e) {
+		if (e.getCodigoPlanta().isEmpty())
+			return false;
+		if (e.getCodigoPlanta().length() < 3 || e.getCodigoPlanta().length() > 20)
+			return false;
+		return true;
 	}
 
 }

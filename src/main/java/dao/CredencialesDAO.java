@@ -15,7 +15,13 @@ public class CredencialesDAO {
 	public CredencialesDAO(Connection conex) {
 			this.conex = conex;
 	}
-	
+	/**
+	 * Método usado para el LOGIN. Comprueba si usuario y contraseña son correctos o no
+	 * 
+	 * @param Un usuario y una contraseña
+	 * @return true si coincide, false si no coinciden
+	 *
+	 */
 	public boolean autenticar(String usuario, String password) {
         String consulta = "SELECT COUNT(*) FROM credenciales WHERE usuario = ? AND password = ?";
         try (PreparedStatement ps = conex.prepareStatement(consulta)) {
@@ -32,7 +38,14 @@ public class CredencialesDAO {
         }
         return false;
     }
-
+	
+	/**
+	 * Comprueba si el usuario pasado como parámetro ya existe en la base de datos
+	 * 
+	 * @param Un nombre de usuario
+	 * @return true si existe, false si no existe
+	 *
+	 */
 	public boolean usuarioExistente(String usuario) {
 		String consulta = "SELECT usuario FROM CREDENCIALES";
 		ArrayList<String> usuariosExistentes = new ArrayList<String>();

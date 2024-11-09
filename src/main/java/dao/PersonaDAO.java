@@ -42,6 +42,13 @@ public class PersonaDAO implements OperacionesCRUD<Persona> {
 	    
 	    return id; 
 	}
+	/**
+	 * Comprueba si un email existe o no en la base de datos
+	 * 
+	 * @param El email que se va a validar
+	 * @return true si ya existe, false si no existe
+	 *
+	 */
 	public boolean emailExistente(String email) {
 
 		String emailsExistentes = "SELECT email FROM personas";
@@ -63,10 +70,7 @@ public class PersonaDAO implements OperacionesCRUD<Persona> {
 
 	}
 
-
 	
-	
-
 	@Override
 	public Collection<Persona> verTodos() {
 		ArrayList<Persona> todas = new ArrayList<Persona>(); 
@@ -93,6 +97,14 @@ public class PersonaDAO implements OperacionesCRUD<Persona> {
 	    
 	    return todas;
 	}
+	/**
+	 * Obtiene el id de la persona que está autenticada en el sistema en este momento
+	 * 
+	 * @param El usuario que está autenticado en este momento
+	 * @return el id de la persona que se le pasa como parámetro
+	 *
+	 */
+	
 	public long IdUsuarioAutenticado(String usuario) {
         long idPersona = -1;
         String consulta = "SELECT personas.id FROM personas INNER JOIN credenciales ON personas.id = idPersona WHERE usuario = ?";
