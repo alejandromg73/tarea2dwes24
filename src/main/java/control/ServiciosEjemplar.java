@@ -31,7 +31,6 @@ public class ServiciosEjemplar {
 	public Ejemplar buscarPorID(long id) {
 		return ejemplarDAO.buscarPorID(id);
 	}
-	
 
 	public int contarEjemplares() {
 		return ejemplarDAO.contarEjemplares();
@@ -40,6 +39,7 @@ public class ServiciosEjemplar {
 	public ArrayList<Ejemplar> ejemplaresPorTipoPlanta(String codigo) {
 		return ejemplarDAO.ejemplaresPorTipoPlanta(codigo);
 	}
+
 	/**
 	 * Método para ver validar un ejemplar
 	 * 

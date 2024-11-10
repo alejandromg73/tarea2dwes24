@@ -33,36 +33,38 @@ public class FachadaPersonal {
 		do {
 			System.out.println("------MENÚ DEL PERSONAL------");
 			System.out.println("Selecciona una opción:");
+			System.out.println("  ───────────────────────────────");
 			System.out.println("1. VER TODAS LAS PLANTAS.");
 			System.out.println("2. Gestión de ejemplares.");
 			System.out.println("3. Gestión de mensajes.");
 			System.out.println("4. CERRAR SESIÓN.");
+			System.out.println("  ───────────────────────────────");
 			try {
-			opcion = in.nextInt();
-			if (opcion < 1 || opcion > 4) {
-				System.out.println("Opción incorrecta.");
-				continue;
-			}
-			switch (opcion) {
-			case 1:
-				FachadaInvitado.getPortalInvitado().verTodasPlantas();
-				break;
-			case 2:
-				menuPersonalEjemplares();
-				break;
-			case 3:
-				menuPersonalMensajes();
-				break;
-			case 4:
-				Controlador.getServicios().cerrarSesion();
-				return;
+				opcion = in.nextInt();
+				if (opcion < 1 || opcion > 4) {
+					System.out.println("Opción incorrecta.");
+					continue;
+				}
+				switch (opcion) {
+				case 1:
+					FachadaInvitado.getPortalInvitado().verTodasPlantas();
+					break;
+				case 2:
+					menuPersonalEjemplares();
+					break;
+				case 3:
+					menuPersonalMensajes();
+					break;
+				case 4:
+					Controlador.getServicios().cerrarSesion();
+					return;
 
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Debes ingresar un número.");
+				in.nextLine();
+				opcion = 0;
 			}
-			}catch(InputMismatchException e){
-            	System.out.println("Debes ingresar un número.");
-            	in.nextLine();
-            	opcion = 0;
-            }
 		} while (opcion != 4);
 	}
 
@@ -70,31 +72,33 @@ public class FachadaPersonal {
 		int opcion = 0;
 		do {
 			System.out.println("Selecciona una opción:");
+			System.out.println("  ───────────────────────────────");
 			System.out.println("1. Registrar nuevo ejemplar.");
 			System.out.println("2. Filtrar ejemplares por tipo de planta.");
 			System.out.println("3. Ver mensajes de un ejemplar.");
 			System.out.println("4. Volver al menú principal.");
+			System.out.println("  ───────────────────────────────");
 			try {
-			opcion = in.nextInt();
-			if (opcion < 1 || opcion > 4) {
-				System.out.println("Opción incorrecta.");
-				continue;
+				opcion = in.nextInt();
+				if (opcion < 1 || opcion > 4) {
+					System.out.println("Opción incorrecta.");
+					continue;
+				}
+				switch (opcion) {
+				case 1:
+					FachadaAdmin.getPortalAdmin().nuevoEjemplar();
+					break;
+				case 2:
+					filtrarEjemplaresPorCodigoPlanta();
+					break;
+				case 3:
+					FachadaAdmin.getPortalAdmin().verMensajesEjemplar();
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Debes ingresar un número.");
+				in.nextLine();
+				opcion = 0;
 			}
-			switch (opcion) {
-			case 1:
-				FachadaAdmin.getPortalAdmin().nuevoEjemplar();
-				break;
-			case 2:
-				filtrarEjemplaresPorCodigoPlanta();
-				break;
-			case 3:
-				FachadaAdmin.getPortalAdmin().verMensajesEjemplar();
-			}
-			}catch(InputMismatchException e){
-            	System.out.println("Debes ingresar un número.");
-            	in.nextLine();
-            	opcion = 0;
-            }
 		} while (opcion != 4);
 	}
 
@@ -102,41 +106,43 @@ public class FachadaPersonal {
 		int opcion = 0;
 		do {
 			System.out.println("Selecciona una opción:");
+			System.out.println("  ───────────────────────────────");
 			System.out.println("1. Nuevo mensaje.");
 			System.out.println("2. Ver todos los mensajes.");
 			System.out.println("3. Ver mensajes por persona.");
 			System.out.println("4. Ver mensajes por rango de fechas.");
 			System.out.println("5. Ver mensajes por tipo de planta.");
 			System.out.println("6. Volver al menú principal.");
+			System.out.println("  ───────────────────────────────");
 			try {
-			opcion = in.nextInt();
-			if (opcion < 1 || opcion > 6) {
-				System.out.println("Opción incorrecta.");
-				continue;
-			}
-			switch (opcion) {
-			case 1:
-				nuevoMensaje();
-				break;
-			case 2:
-				FachadaAdmin.getPortalAdmin().verTodosMensajes();
-				break;
-			case 3:
-				verMensajesPersona();
-				break;
-			case 4:
-				verMensajeFechas();
-				break;
-			case 5:
-				 verMensajeTipoPlanta();
-				break;
+				opcion = in.nextInt();
+				if (opcion < 1 || opcion > 6) {
+					System.out.println("Opción incorrecta.");
+					continue;
+				}
+				switch (opcion) {
+				case 1:
+					nuevoMensaje();
+					break;
+				case 2:
+					FachadaAdmin.getPortalAdmin().verTodosMensajes();
+					break;
+				case 3:
+					verMensajesPersona();
+					break;
+				case 4:
+					verMensajeFechas();
+					break;
+				case 5:
+					verMensajeTipoPlanta();
+					break;
 
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Debes ingresar un número.");
+				in.nextLine();
+				opcion = 0;
 			}
-			}catch(InputMismatchException e){
-            	System.out.println("Debes ingresar un número.");
-            	in.nextLine();
-            	opcion = 0;
-            }
 		} while (opcion != 6);
 	}
 
@@ -151,6 +157,7 @@ public class FachadaPersonal {
 			System.out.println(e);
 		}
 	}
+
 	/**
 	 * Método para crear un nuevo mensaje sobre un ejemplar de la base de datos.
 	 * Primero se muestran todos para que el usuario elija
@@ -167,7 +174,8 @@ public class FachadaPersonal {
 				idEjemplar = in.nextInt();
 				in.nextLine();
 				if (idEjemplar < 1 || idEjemplar > controlador.getServiciosEjemplar().contarEjemplares()) {
-					System.out.println("Debes introducir un número entre el 1 y el" + controlador.getServiciosEjemplar().contarEjemplares());
+					System.out.println("Debes introducir un número entre el 1 y el"
+							+ controlador.getServiciosEjemplar().contarEjemplares());
 				} else {
 					String mensaje = "";
 					boolean mensajeValido = false;
@@ -196,10 +204,11 @@ public class FachadaPersonal {
 			}
 		} while (!correcto);
 	}
-	
+
 	public void filtrarEjemplaresPorCodigoPlanta() {
 		try {
 			System.out.print("Introduce el código de la planta para ver los ejemplares: ");
+			System.out.println();
 			String codigo = in.nextLine().trim().toUpperCase();
 			boolean valido = controlador.getServiciosPlanta().codigoExistente(codigo);
 			if (valido) {
@@ -244,77 +253,73 @@ public class FachadaPersonal {
 	}
 
 	public void verMensajeTipoPlanta() {
-	    System.out.print("Introduce el código de una planta: ");
-	    String codigo = in.nextLine().trim().toUpperCase();
-	    try {
-	        boolean valido = controlador.getServiciosPlanta().validarCodigo(codigo);
-	        if (!valido) {
-	            System.out.println("El código de la planta no es válido.");
-	            return;
-	        }
-	        boolean existe = controlador.getServiciosPlanta().codigoExistente(codigo);
-	        if (existe) {
-	            ArrayList<Mensaje> mensajes = controlador.getServiciosMensaje().verMensajesPorCodigoPlanta(codigo);
-	            if (mensajes.isEmpty()) {
-	                System.out.println("No se encontraron mensajes de la planta");
-	            } else {
-	                System.out.println("Mensajes para la planta con el código " + codigo);
-	                for (Mensaje m : mensajes) {
-	                    System.out.println(m); 
-	                }
-	            }
-	        } else {
-	            System.out.println("No se encontró ninguna planta con ese código");
-	        }
-	    } catch (Exception e) {
-	        System.out.println("Se produjo un error al intentar obtener los mensajes: " + e.getMessage());
-	    }
+		System.out.print("Introduce el código de una planta: ");
+		String codigo = in.nextLine().trim().toUpperCase();
+		try {
+			boolean valido = controlador.getServiciosPlanta().validarCodigo(codigo);
+			if (!valido) {
+				System.out.println("El código de la planta no es válido.");
+				return;
+			}
+			boolean existe = controlador.getServiciosPlanta().codigoExistente(codigo);
+			if (existe) {
+				ArrayList<Mensaje> mensajes = controlador.getServiciosMensaje().verMensajesPorCodigoPlanta(codigo);
+				if (mensajes.isEmpty()) {
+					System.out.println("No se encontraron mensajes de la planta");
+				} else {
+					System.out.println("Mensajes para la planta con el código " + codigo);
+					System.out.println();
+					for (Mensaje m : mensajes) {
+						System.out.println(m);
+						System.out.println();
+					}
+				}
+			} else {
+				System.out.println("No se encontró ninguna planta con ese código");
+			}
+		} catch (Exception e) {
+			System.out.println("Se produjo un error al intentar obtener los mensajes: " + e.getMessage());
+		}
 	}
-	
+
 	public void verMensajeFechas() {
 		in.nextLine();
-		    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-		    LocalDateTime fechaInicio = null;
-		    LocalDateTime fechaFin = null;
-		    do{
-		        try {
-		            System.out.print("Introduce la primera fecha y la hora con el formato: dd-MM-yyyy HH:mm ");
-		            String fechaInicioIntro = in.nextLine();
-		            fechaInicio = LocalDateTime.parse(fechaInicioIntro, formatter);
-		        } catch (DateTimeParseException e) {
-		            System.out.println("Formato de fecha no válido.");
-		        }
-		    }while (fechaInicio == null);
-		    do{
-		        try {
-		            System.out.print("Introduce la segunda fecha y la hora con el formato: dd-MM-yyyy HH:mm ");
-		            String fechaFinIntro = in.nextLine();
-		            fechaFin = LocalDateTime.parse(fechaFinIntro, formatter);
-		            if (fechaFin.isBefore(fechaInicio)) {
-		                System.out.println("La fecha de fin no puede ser anterior a la fecha de inicio.");
-		                fechaFin = null;
-		            }
-		        } catch (DateTimeParseException e) {
-		            System.out.println("Formato de fecha no válido.");
-		        }
-		    }while (fechaFin == null) ;
-		    ArrayList<Mensaje> mensajes = controlador.getServiciosMensaje().verMensajesFecha(fechaInicio, fechaFin);
-		    if (mensajes.isEmpty()) {
-		        System.out.println("No se encontraron mensajes en el rango de fechas proporcionado.");
-		    } else {
-		        System.out.println("Mensajes encontrados:");
-		        for (Mensaje m : mensajes) {
-		            System.out.println("ID: " + m.getId());
-		            System.out.println("Fecha: " + m.getFechaHora());
-		            System.out.println("Mensaje: " + m.getMensaje());
-		            System.out.println("ID Ejemplar: " + m.getIdEjemplar());
-		            System.out.println("ID Persona: " + m.getIdPersona());
-		            System.out.println("-------------");
-		        }
-		    }
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+		LocalDateTime fechaInicio = null;
+		LocalDateTime fechaFin = null;
+		do {
+			try {
+				System.out.print("Introduce la primera fecha y la hora con el formato: dd-MM-yyyy HH:mm ");
+				String fechaInicioIntro = in.nextLine();
+				fechaInicio = LocalDateTime.parse(fechaInicioIntro, formatter);
+			} catch (DateTimeParseException e) {
+				System.out.println("Formato de fecha no válido.");
+			}
+		} while (fechaInicio == null);
+		do {
+			try {
+				System.out.print("Introduce la segunda fecha y la hora con el formato: dd-MM-yyyy HH:mm ");
+				String fechaFinIntro = in.nextLine();
+				fechaFin = LocalDateTime.parse(fechaFinIntro, formatter);
+				if (fechaFin.isBefore(fechaInicio)) {
+					System.out.println("La fecha de fin no puede ser anterior a la fecha de inicio.");
+					fechaFin = null;
+				}
+			} catch (DateTimeParseException e) {
+				System.out.println("Formato de fecha no válido.");
+			}
+		} while (fechaFin == null);
+		ArrayList<Mensaje> mensajes = controlador.getServiciosMensaje().verMensajesFecha(fechaInicio, fechaFin);
+		if (mensajes.isEmpty()) {
+			System.out.println("No se encontraron mensajes en el rango de fechas proporcionado.");
+		} else {
+			System.out.println("Mensajes encontrados:");
+			System.out.println();
+			for (Mensaje m : mensajes) {
+				System.out.println(m);
+				System.out.println();
+
+			}
+		}
 	}
 }
-		
-	
-
-

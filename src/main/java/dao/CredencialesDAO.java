@@ -11,34 +11,35 @@ public class CredencialesDAO {
 	private PreparedStatement ps;
 	private ResultSet rs;
 
-
 	public CredencialesDAO(Connection conex) {
-			this.conex = conex;
+		this.conex = conex;
 	}
+
 	/**
-	 * Método usado para el LOGIN. Comprueba si usuario y contraseña son correctos o no
+	 * Método usado para el LOGIN. Comprueba si usuario y contraseña son correctos o
+	 * no
 	 * 
 	 * @param Un usuario y una contraseña
 	 * @return true si coincide, false si no coinciden
 	 *
 	 */
 	public boolean autenticar(String usuario, String password) {
-        String consulta = "SELECT COUNT(*) FROM credenciales WHERE usuario = ? AND password = ?";
-        try (PreparedStatement ps = conex.prepareStatement(consulta)) {
-            ps.setString(1, usuario);
-            ps.setString(2, password);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    int total = rs.getInt(1);
-                    return total > 0;
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al autenticar usuario: " + e.getMessage());
-        }
-        return false;
-    }
-	
+		String consulta = "SELECT COUNT(*) FROM credenciales WHERE usuario = ? AND password = ?";
+		try (PreparedStatement ps = conex.prepareStatement(consulta)) {
+			ps.setString(1, usuario);
+			ps.setString(2, password);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					int total = rs.getInt(1);
+					return total > 0;
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Error al autenticar usuario: " + e.getMessage());
+		}
+		return false;
+	}
+
 	/**
 	 * Comprueba si el usuario pasado como parámetro ya existe en la base de datos
 	 * 
@@ -65,6 +66,7 @@ public class CredencialesDAO {
 		}
 
 	}
+
 	public int insertar(String usuario, String contraseña, Long idPersona) {
 		int filas = 0;
 		String insertarCredenciales = "INSERT INTO credenciales (usuario, password, idPersona) VALUES (?, ?, ?)";
@@ -80,12 +82,5 @@ public class CredencialesDAO {
 		return filas;
 
 	}
-	
-	}
 
-
-
-
-	
-	
-	
+}
