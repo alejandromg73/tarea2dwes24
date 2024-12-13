@@ -208,6 +208,7 @@ public class FachadaPersonal {
 	}
 
 	public void filtrarEjemplaresPorCodigoPlanta() {
+		in.nextLine();
 		FachadaInvitado.getPortalInvitado().verTodasPlantas();
 		try {
 			System.out.print("Introduce el código de la planta para ver los ejemplares: ");
@@ -221,7 +222,8 @@ public class FachadaPersonal {
 				} else {
 					System.out.println("Ejemplares con el código " + codigo + ":");
 					for (Ejemplar e : ejemplares) {
-						System.out.println("ID: " + e.getId() + ", Nombre: " + e.getNombre());
+						System.out.println(e);
+						System.out.println();
 					}
 				}
 			} else {
