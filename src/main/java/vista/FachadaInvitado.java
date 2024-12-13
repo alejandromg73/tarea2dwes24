@@ -45,7 +45,7 @@ public class FachadaInvitado {
 					login();
 					break;
 				case 3:
-					System.out.println("Saliendo del programa");
+					System.out.println("Has salido del programa");
 					break;
 				default:
 					System.out.println("Opción incorrecta.");

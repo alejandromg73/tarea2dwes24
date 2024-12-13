@@ -259,6 +259,7 @@ public class FachadaPersonal {
 	}
 
 	public void verMensajeTipoPlanta() {
+		in.nextLine();
 		FachadaInvitado.getPortalInvitado().verTodasPlantas();
 		System.out.print("Introduce el código de una planta: ");
 		String codigo = in.nextLine().trim().toUpperCase();
