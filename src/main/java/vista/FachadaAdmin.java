@@ -79,7 +79,7 @@ public class FachadaAdmin {
 			System.out.println("\t\t\t\t\t1. Ver plantas.");
 			System.out.println("\t\t\t\t\t2. Crear nueva planta.");
 			System.out.println("\t\t\t\t\t3. Modificar datos de una planta.");
-			System.out.println("\t\t\t\t\t4. Volver al menú principal.");
+			System.out.println("\t\t\t\t\t5. Volver al menú principal.");
 			System.out.println("\t\t\t\t\t ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
@@ -97,6 +97,7 @@ public class FachadaAdmin {
 				case 3:
 					menuAdminModificarPlantas();
 					break;
+				
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Debes ingresar un número.");
@@ -146,11 +147,12 @@ public class FachadaAdmin {
 			System.out.println("\t\t\t\t\t1. Registrar nuevo ejemplar.");
 			System.out.println("\t\t\t\t\t2. Filtrar ejemplares por tipo de planta.");
 			System.out.println("\t\t\t\t\t3. Ver mensajes de un ejemplar.");
-			System.out.println("\t\t\t\t\t4. Volver al menú principal.");
+			System.out.println("\t\t\t\t\t4. Borrar un ejemplar.");
+			System.out.println("\t\t\t\t\t5. Volver al menú principal.");
 			System.out.println(" \t\t\t\t\t ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
-				if (opcion < 1 || opcion > 4) {
+				if (opcion < 1 || opcion > 5) {
 					System.out.println("Opción incorrecta.");
 					continue;
 				}
@@ -163,14 +165,18 @@ public class FachadaAdmin {
 					break;
 				case 3:
 					verMensajesEjemplar();
-
+					break;
+				case 4:
+					borrarEjemplar();
+					break;
+				
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Debes ingresar un número.");
 				in.nextLine();
 				opcion = 0;
 			}
-		} while (opcion != 4);
+		} while (opcion != 5);
 	}
 
 	public void menuAdminPersonas() {
@@ -180,11 +186,12 @@ public class FachadaAdmin {
 			System.out.println("\t\t\t\t\t  ───────────────────────────────");
 			System.out.println("\t\t\t\t\t1. Registrar nueva persona.");
 			System.out.println("\t\t\t\t\t2. Ver todas las personas.");
-			System.out.println("\t\t\t\t\t3. Volver al menú principal.");
+			System.out.println("\t\t\t\t\t3. Borrar una persona.");
+			System.out.println("\t\t\t\t\t4. Volver al menú principal.");
 			System.out.println("\t\t\t\t\t  ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
-				if (opcion < 1 || opcion > 3) {
+				if (opcion < 1 || opcion > 4) {
 					System.out.println("Opción incorrecta.");
 					continue;
 				}
@@ -195,6 +202,9 @@ public class FachadaAdmin {
 				case 2:
 					verTodasPersonas();
 					break;
+				case 3:
+					borrarPersona();
+					break;
 
 				}
 			} catch (InputMismatchException e) {
@@ -202,7 +212,7 @@ public class FachadaAdmin {
 				in.nextLine();
 				opcion = 0;
 			}
-		} while (opcion != 3);
+		} while (opcion != 4);
 	}
 
 	public void menuAdminMensajes() {
@@ -590,5 +600,42 @@ public class FachadaAdmin {
 		} catch (Exception e) {
 			System.out.println("Error al intentar obtener los mensajes del ejemplar: " + e.getMessage());
 		}
+	}
+	
+	/*
+	 * El administrador puede eliminar una persona de la base de datos. Este método no se pedía, pero he decidido incluirlo porque 
+	 * así me resulta más fácil manejar las operaciones desde el programa java y no tengo que borrar en la base de datos a mano
+	 */
+	public void borrarPersona() {
+		verTodasPersonas();
+		System.out.print("Introduce el id de la persona que quieres borrar: ");
+		    Long idPersona = in.nextLong();
+		    in.nextLine();
+		    boolean borrada = controlador.getServiciosPersona().borrarPersona(idPersona);
+		    if (borrada) {
+		        System.out.println("Persona con id " + idPersona + " borrada");
+		    } else {
+		        System.out.println("No se puede borrar la persona");
+		    }
+		
+
+	}
+	/*
+	 * El administrador puede eliminar un ejemplar de la base de datos. Este método no se pedía, pero he decidido incluirlo porque 
+	 * así me resulta más fácil manejar las operaciones desde el programa java y no tengo que borrar en la base de datos a mano
+	 */
+	public void borrarEjemplar() {
+		FachadaPersonal.getPortalPersonal().verTodosEjemplares();
+		System.out.print("Introduce el id del ejemplar que quieres borrar: ");
+		    Long idPersona = in.nextLong();
+		    in.nextLine();
+		    boolean borrado = controlador.getServiciosPersona().borrarPersona(idPersona);
+		    if (borrado) {
+		        System.out.println("Ejemplar con id " + idPersona + " borrado");
+		    } else {
+		        System.out.println("No se puede borrar el ejemplar");
+		    }
+		
+
 	}
 }

@@ -119,5 +119,19 @@ public class PersonaDAO implements OperacionesCRUD<Persona> {
 		}
 		return idPersona;
 	}
+	
+	public boolean borrarPersona(Long idPersona) {
+	    String consulta = "DELETE FROM personas WHERE id = ?";
+	    try (Connection connection = ConexionBD.getConexion();
+	         PreparedStatement ps = connection.prepareStatement(consulta)) {
+	        ps.setLong(1, idPersona);
+	        int filas = ps.executeUpdate();
+	        return filas > 0;
+	    } catch (SQLException e) {
+	        System.out.println("Error borrando la persona: " + e.getMessage());
+	        return false;
+	    }
+	}
+
 
 }

@@ -153,8 +153,10 @@ public class FachadaPersonal {
 			return;
 		}
 		System.out.println("Todos los ejemplares: ");
+		System.out.println();
 		for (Ejemplar e : ejemplares) {
 			System.out.println(e);
+			System.out.println();
 		}
 	}
 

@@ -39,6 +39,10 @@ public class ServiciosEjemplar {
 	public ArrayList<Ejemplar> ejemplaresPorTipoPlanta(String codigo) {
 		return ejemplarDAO.ejemplaresPorTipoPlanta(codigo);
 	}
+	
+	public boolean borrarEjemplar (long id) {
+		return ejemplarDAO.borrarEjemplar(id);
+	}
 
 	/**
 	 * Método para ver validar un ejemplar

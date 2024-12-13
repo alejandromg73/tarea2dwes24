@@ -61,5 +61,8 @@ public class ServiciosPersona {
 
 		return true;
 	}
+	public boolean borrarPersona (long id) {
+		return personaDAO.borrarPersona(id);
+	}
 
 }

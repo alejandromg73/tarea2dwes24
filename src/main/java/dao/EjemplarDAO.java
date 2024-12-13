@@ -154,5 +154,18 @@ public class EjemplarDAO implements OperacionesCRUD<Ejemplar> {
 		}
 		return ej;
 	}
+	
+	public boolean borrarEjemplar(Long idEjemplar) {
+	    String consulta = "DELETE FROM ejemplares WHERE id = ?";
+	    try (Connection connection = ConexionBD.getConexion();
+	         PreparedStatement ps = connection.prepareStatement(consulta)) {
+	        ps.setLong(1, idEjemplar);
+	        int filas = ps.executeUpdate();
+	        return filas > 0;
+	    } catch (SQLException e) {
+	        System.out.println("Error borrando al ejemplar: " + e.getMessage());
+	        return false;
+	    }
+	}
 
 }
