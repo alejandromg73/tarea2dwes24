@@ -27,14 +27,14 @@ public class FachadaInvitado {
 	public void menuInvitado() {
 		int opcion = 0;
 		do {
-			System.out.println("------GESTIÓN DEL VIVERO------");
+			System.out.println("\t\t\t\t\t------GESTIÓN DEL VIVERO------");
 			System.out.println();
-			System.out.println("Selecciona una opción: ");
-			System.out.println("───────────────────────────────");
-			System.out.println("1. VER TODAS LAS PLANTAS");
-			System.out.println("2. LOGUEARSE");
-			System.out.println("3. SALIR DEL PROGRAMA");
-			System.out.println("───────────────────────────────");
+			System.out.println("\t\t\t\t\tSelecciona una opción: ");
+			System.out.println("\t\t\t\t\t───────────────────────────────");
+			System.out.println("\t\t\t\t\t1. VER TODAS LAS PLANTAS");
+			System.out.println("\t\t\t\t\t2. LOGUEARSE");
+			System.out.println("\t\t\t\t\t3. SALIR DEL PROGRAMA");
+			System.out.println("\t\t\t\t\t───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				switch (opcion) {

@@ -12,7 +12,6 @@ import utils.ConexionBD;
 
 public class EjemplarDAO implements OperacionesCRUD<Ejemplar> {
 	Connection conex;
-	private PreparedStatement ps;
 
 	public EjemplarDAO(Connection conex) {
 

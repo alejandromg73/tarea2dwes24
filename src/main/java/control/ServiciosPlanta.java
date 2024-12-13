@@ -48,7 +48,7 @@ public class ServiciosPlanta {
 	 *
 	 */
 	public boolean validarPlanta(Planta p) {
-		if (p.getCodigo().isEmpty())
+		if (p.getCodigo().isEmpty() || p.getCodigo().contains(" "))
 			return false;
 		if (p.getCodigo().length() < 3 || p.getCodigo().length() > 50)
 			return false;

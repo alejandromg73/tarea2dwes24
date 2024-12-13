@@ -31,14 +31,14 @@ public class FachadaPersonal {
 	public void menuPersonal() {
 		int opcion = 0;
 		do {
-			System.out.println("------MENÚ DEL PERSONAL------");
-			System.out.println("Selecciona una opción:");
-			System.out.println("  ───────────────────────────────");
-			System.out.println("1. VER TODAS LAS PLANTAS.");
-			System.out.println("2. Gestión de ejemplares.");
-			System.out.println("3. Gestión de mensajes.");
-			System.out.println("4. CERRAR SESIÓN.");
-			System.out.println("  ───────────────────────────────");
+			System.out.println("\t\t\t\t\t------MENÚ DEL PERSONAL------");
+			System.out.println("\t\t\t\t\tSelecciona una opción:");
+			System.out.println(" \t\t\t\t\t ───────────────────────────────");
+			System.out.println("\t\t\t\t\t1. VER TODAS LAS PLANTAS.");
+			System.out.println("\t\t\t\t\t2. Gestión de ejemplares.");
+			System.out.println("\t\t\t\t\t3. Gestión de mensajes.");
+			System.out.println("\t\t\t\t\t4. CERRAR SESIÓN.");
+			System.out.println("\t\t\t\t\t  ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				if (opcion < 1 || opcion > 4) {
@@ -71,13 +71,13 @@ public class FachadaPersonal {
 	public void menuPersonalEjemplares() {
 		int opcion = 0;
 		do {
-			System.out.println("Selecciona una opción:");
-			System.out.println("  ───────────────────────────────");
-			System.out.println("1. Registrar nuevo ejemplar.");
-			System.out.println("2. Filtrar ejemplares por tipo de planta.");
-			System.out.println("3. Ver mensajes de un ejemplar.");
-			System.out.println("4. Volver al menú principal.");
-			System.out.println("  ───────────────────────────────");
+			System.out.println("\t\t\t\t\tSelecciona una opción:");
+			System.out.println(" \t\t\t\t\t ───────────────────────────────");
+			System.out.println("\t\t\t\t\t1. Registrar nuevo ejemplar.");
+			System.out.println("\t\t\t\t\t2. Filtrar ejemplares por tipo de planta.");
+			System.out.println("\t\t\t\t\t3. Ver mensajes de un ejemplar.");
+			System.out.println("\t\t\t\t\t4. Volver al menú principal.");
+			System.out.println("\t\t\t\t\t ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				if (opcion < 1 || opcion > 4) {
@@ -105,15 +105,15 @@ public class FachadaPersonal {
 	public void menuPersonalMensajes() {
 		int opcion = 0;
 		do {
-			System.out.println("Selecciona una opción:");
-			System.out.println("  ───────────────────────────────");
-			System.out.println("1. Nuevo mensaje.");
-			System.out.println("2. Ver todos los mensajes.");
-			System.out.println("3. Ver mensajes por persona.");
-			System.out.println("4. Ver mensajes por rango de fechas.");
-			System.out.println("5. Ver mensajes por tipo de planta.");
-			System.out.println("6. Volver al menú principal.");
-			System.out.println("  ───────────────────────────────");
+			System.out.println("\t\t\t\t\tSelecciona una opción:");
+			System.out.println("\t\t\t\t\t ───────────────────────────────");
+			System.out.println("\t\t\t\t\t1. Nuevo mensaje.");
+			System.out.println("\t\t\t\t\t2. Ver todos los mensajes.");
+			System.out.println("\t\t\t\t\t3. Ver mensajes por persona.");
+			System.out.println("\t\t\t\t\t4. Ver mensajes por rango de fechas.");
+			System.out.println("\t\t\t\t\t5. Ver mensajes por tipo de planta.");
+			System.out.println("\t\t\t\t\t6. Volver al menú principal.");
+			System.out.println("\t\t\t\t\t ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				if (opcion < 1 || opcion > 6) {
@@ -206,6 +206,7 @@ public class FachadaPersonal {
 	}
 
 	public void filtrarEjemplaresPorCodigoPlanta() {
+		FachadaInvitado.getPortalInvitado().verTodasPlantas();
 		try {
 			System.out.print("Introduce el código de la planta para ver los ejemplares: ");
 			System.out.println();
@@ -230,6 +231,7 @@ public class FachadaPersonal {
 	}
 
 	public void verMensajesPersona() {
+		FachadaAdmin.getPortalAdmin().verTodasPersonas();
 		System.out.print("Introduce el id de una persona para ver sus mensajes: ");
 		try {
 			long idPersona = in.nextLong();
@@ -253,6 +255,7 @@ public class FachadaPersonal {
 	}
 
 	public void verMensajeTipoPlanta() {
+		FachadaInvitado.getPortalInvitado().verTodasPlantas();
 		System.out.print("Introduce el código de una planta: ");
 		String codigo = in.nextLine().trim().toUpperCase();
 		try {

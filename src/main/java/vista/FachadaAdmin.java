@@ -31,15 +31,15 @@ public class FachadaAdmin {
 	public void menuAdmin() {
 		int opcion = 0;
 		do {
-			System.out.println("------MENÚ DE ADMINISTRADOR------");
-			System.out.println("───────────────────────────────");
-			System.out.println("Selecciona una opción:");
-			System.out.println("1. Gestión de plantas.");
-			System.out.println("2. Gestión de ejemplares.");
-			System.out.println("3. Gestión de mensajes.");
-			System.out.println("4. Gestión de personas.");
-			System.out.println("5. CERRAR SESIÓN.");
-			System.out.println("───────────────────────────────");
+			System.out.println("\t\t\t\t\t------MENÚ DE ADMINISTRADOR------");
+			System.out.println("\t\t\t\t\t───────────────────────────────");
+			System.out.println("\t\t\t\t\tSelecciona una opción:");
+			System.out.println("\t\t\t\t\t1. Gestión de plantas.");
+			System.out.println("\t\t\t\t\t2. Gestión de ejemplares.");
+			System.out.println("\t\t\t\t\t3. Gestión de mensajes.");
+			System.out.println("\t\t\t\t\t4. Gestión de personas.");
+			System.out.println("\t\t\t\t\t5. CERRAR SESIÓN.");
+			System.out.println("\t\t\t\t\t───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				if (opcion < 1 || opcion > 5) {
@@ -74,13 +74,13 @@ public class FachadaAdmin {
 	public void menuAdminPlantas() {
 		int opcion = 0;
 		do {
-			System.out.println("Selecciona una opción:");
-			System.out.println("  ───────────────────────────────");
-			System.out.println("1. Ver plantas.");
-			System.out.println("2. Crear nueva planta.");
-			System.out.println("3. Modificar datos de una planta.");
-			System.out.println("4. Volver al menú principal.");
-			System.out.println("  ───────────────────────────────");
+			System.out.println("\t\t\t\t\tSelecciona una opción:");
+			System.out.println(" \t\t\t\t\t ───────────────────────────────");
+			System.out.println("\t\t\t\t\t1. Ver plantas.");
+			System.out.println("\t\t\t\t\t2. Crear nueva planta.");
+			System.out.println("\t\t\t\t\t3. Modificar datos de una planta.");
+			System.out.println("\t\t\t\t\t4. Volver al menú principal.");
+			System.out.println("\t\t\t\t\t ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				if (opcion < 1 || opcion > 4) {
@@ -109,12 +109,12 @@ public class FachadaAdmin {
 	public void menuAdminModificarPlantas() {
 		int opcion = 0;
 		do {
-			System.out.println("Selecciona una opción:");
-			System.out.println("  ───────────────────────────────");
-			System.out.println("1. Modificar nombre común.");
-			System.out.println("2. Modificar nombre científico.");
-			System.out.println("3. Volver al menú de plantas.");
-			System.out.println("  ───────────────────────────────");
+			System.out.println("\t\t\t\t\tSelecciona una opción:");
+			System.out.println("\t\t\t\t\t───────────────────────────────");
+			System.out.println("\t\t\t\t\t1. Modificar nombre común.");
+			System.out.println("\t\t\t\t\t2. Modificar nombre científico.");
+			System.out.println("\t\t\t\t\t3. Volver al menú de plantas.");
+			System.out.println("\t\t\t\t\t  ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				if (opcion < 1 || opcion > 3) {
@@ -141,13 +141,13 @@ public class FachadaAdmin {
 	public void menuAdminEjemplares() {
 		int opcion = 0;
 		do {
-			System.out.println("Selecciona una opción:");
-			System.out.println("  ───────────────────────────────");
-			System.out.println("1. Registrar nuevo ejemplar.");
-			System.out.println("2. Filtrar ejemplares por tipo de planta.");
-			System.out.println("3. Ver mensajes de un ejemplar.");
-			System.out.println("4. Volver al menú principal.");
-			System.out.println("  ───────────────────────────────");
+			System.out.println("\t\t\t\t\tSelecciona una opción:");
+			System.out.println(" \t\t\t\t\t ───────────────────────────────");
+			System.out.println("\t\t\t\t\t1. Registrar nuevo ejemplar.");
+			System.out.println("\t\t\t\t\t2. Filtrar ejemplares por tipo de planta.");
+			System.out.println("\t\t\t\t\t3. Ver mensajes de un ejemplar.");
+			System.out.println("\t\t\t\t\t4. Volver al menú principal.");
+			System.out.println(" \t\t\t\t\t ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				if (opcion < 1 || opcion > 4) {
@@ -176,12 +176,12 @@ public class FachadaAdmin {
 	public void menuAdminPersonas() {
 		int opcion = 0;
 		do {
-			System.out.println("Selecciona una opción:");
-			System.out.println("  ───────────────────────────────");
-			System.out.println("1. Registrar nueva persona.");
-			System.out.println("2. Ver todas las personas.");
-			System.out.println("3. Volver al menú principal.");
-			System.out.println("  ───────────────────────────────");
+			System.out.println("\t\t\t\t\tSelecciona una opción:");
+			System.out.println("\t\t\t\t\t  ───────────────────────────────");
+			System.out.println("\t\t\t\t\t1. Registrar nueva persona.");
+			System.out.println("\t\t\t\t\t2. Ver todas las personas.");
+			System.out.println("\t\t\t\t\t3. Volver al menú principal.");
+			System.out.println("\t\t\t\t\t  ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				if (opcion < 1 || opcion > 3) {
@@ -208,12 +208,12 @@ public class FachadaAdmin {
 	public void menuAdminMensajes() {
 		int opcion = 0;
 		do {
-			System.out.println("Selecciona una opción:");
-			System.out.println("  ───────────────────────────────");
-			System.out.println("1. Nuevo mensaje.");
-			System.out.println("2. Ver mensajes.");
-			System.out.println("3. Volver al menú principal.");
-			System.out.println("  ───────────────────────────────");
+			System.out.println("\t\t\t\t\tSelecciona una opción:");
+			System.out.println("\t\t\t\t\t  ───────────────────────────────");
+			System.out.println("\t\t\t\t\t1. Nuevo mensaje.");
+			System.out.println("\t\t\t\t\t2. Ver mensajes.");
+			System.out.println("\t\t\t\t\t3. Volver al menú principal.");
+			System.out.println("\t\t\t\t\t  ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				if (opcion < 1 || opcion > 3) {
@@ -239,14 +239,14 @@ public class FachadaAdmin {
 	public void menuAdminVerMensajes() {
 		int opcion = 0;
 		do {
-			System.out.println("Selecciona una opción:");
-			System.out.println("  ───────────────────────────────");
-			System.out.println("1. Ver todos los mensajes.");
-			System.out.println("2. Ver mensajes por persona.");
-			System.out.println("3. Ver mensajes por rango de fechas.");
-			System.out.println("4. Ver mensajes por tipo de planta.");
-			System.out.println("5. Volver al menú de mensajes.");
-			System.out.println("  ───────────────────────────────");
+			System.out.println("\t\t\t\t\tSelecciona una opción:");
+			System.out.println("\t\t\t\t\t ───────────────────────────────");
+			System.out.println("\t\t\t\t\t1. Ver todos los mensajes.");
+			System.out.println("\t\t\t\t\t2. Ver mensajes por persona.");
+			System.out.println("\t\t\t\t\t3. Ver mensajes por rango de fechas.");
+			System.out.println("\t\t\t\t\t4. Ver mensajes por tipo de planta.");
+			System.out.println("\t\t\t\t\t5. Volver al menú de mensajes.");
+			System.out.println("\t\t\t\t\t  ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
 				if (opcion < 1 || opcion > 5) {
@@ -287,7 +287,7 @@ public class FachadaAdmin {
 		boolean datosPlantaCorrectos = false;
 		do {
 			p = new Planta();
-			System.out.print("Código: ");
+			System.out.print("Código (MAYÚSCULAS): ");
 			try {
 				String codigo = in.nextLine().trim().toUpperCase();
 				boolean correcto = controlador.getServiciosPlanta().validarCodigo(codigo);
@@ -336,6 +336,7 @@ public class FachadaAdmin {
 	 * 
 	 */
 	public Ejemplar nuevoEjemplar() {
+		FachadaInvitado.getPortalInvitado().verTodasPlantas();
 		in.nextLine();
 		Ejemplar e;
 		Mensaje m;
@@ -422,9 +423,8 @@ public class FachadaAdmin {
 				usuario = in.nextLine().trim();
 				if (usuario.equalsIgnoreCase("ADMIN")) {
 					System.out.println("El usuario 'admin' ya está ocupado.");
-				} else if (controlador.getServiciosCredenciales().usuarioExistente(usuario) || usuario.length() < 3) {
-					System.out.println(
-							"El usuario que has introducido ya está registrado o no cumple con los requisitos mínimos.");
+				} else if (controlador.getServiciosCredenciales().usuarioExistente(usuario) || usuario.length() < 3 || usuario.contains(" ")) {
+					System.out.println("El usuario que has introducido ya está registrado o no cumple con los requisitos mínimos.");
 				} else {
 					usuarioValido = true;
 					c.setUsuario(usuario);
@@ -436,8 +436,7 @@ public class FachadaAdmin {
 				// Una pequeña medida de seguridad para las credenciales que he decidido
 				// introducir
 				if (controlador.getServiciosCredenciales().validarContraseña(contraseña) == false) {
-					System.out.println(
-							"La contraseña debe tener al menos 8 caracteres e incluir al menos un carácter especial como un punto o una coma.");
+					System.out.println("La contraseña debe tener al menos 8 caracteres e incluir al menos un carácter especial como un punto o una coma.");
 				} else {
 					contraseñaValida = true;
 					c.setPassword(contraseña);
@@ -499,6 +498,7 @@ public class FachadaAdmin {
 	}
 
 	public void modificarNombreComun() {
+		FachadaInvitado.getPortalInvitado().verTodasPlantas();
 		in.nextLine();
 		boolean valido = false;
 		String codigo = "";
@@ -531,6 +531,7 @@ public class FachadaAdmin {
 	}
 
 	public void modificarNombreCientifico() {
+		FachadaInvitado.getPortalInvitado().verTodasPlantas();
 		in.nextLine();
 		boolean valido = false;
 		boolean existe = false;
@@ -566,6 +567,7 @@ public class FachadaAdmin {
 	}
 
 	public void verMensajesEjemplar() {
+		FachadaPersonal.getPortalPersonal().verTodosEjemplares();
 		System.out.print("Introduce el id de un ejemplar para ver sus mensajes: ");
 		try {
 			long idEjemplar = in.nextLong();
