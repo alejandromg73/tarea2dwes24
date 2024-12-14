@@ -80,7 +80,7 @@ public class FachadaAdmin {
 			System.out.println("\t\t\t\t\t1. Ver plantas.");
 			System.out.println("\t\t\t\t\t2. Crear nueva planta.");
 			System.out.println("\t\t\t\t\t3. Modificar datos de una planta.");
-			System.out.println("\t\t\t\t\t5. Volver al menú principal.");
+			System.out.println("\t\t\t\t\t4. Volver al menú principal.");
 			System.out.println("\t\t\t\t\t ───────────────────────────────");
 			try {
 				opcion = in.nextInt();
@@ -447,7 +447,7 @@ public class FachadaAdmin {
 				// Una pequeña medida de seguridad para las credenciales que he decidido
 				// introducir
 				if (controlador.getServiciosCredenciales().validarContraseña(contraseña) == false) {
-					System.out.println("La contraseña debe tener al menos 8 caracteres e incluir al menos un carácter especial como un punto o una coma.");
+					System.out.println("La contraseña debe tener al menos 8 caracteres e incluir al menos un carácter especial y 2 números para hacerla segura");
 				} else {
 					contraseñaValida = true;
 					c.setPassword(contraseña);

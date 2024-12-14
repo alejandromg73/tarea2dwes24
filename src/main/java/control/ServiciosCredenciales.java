@@ -26,7 +26,7 @@ public class ServiciosCredenciales {
 	}
 
 	public boolean validarContraseña(String contraseña) {
-		if (contraseña.matches("^(?=.*[.,])[A-Za-z0-9.,]{8,}$")) {
+		if (contraseña.matches("^(?=.*[0-9])(?=.*[.,]).{8,}$")) {
 			return true;
 		}
 		return false;
