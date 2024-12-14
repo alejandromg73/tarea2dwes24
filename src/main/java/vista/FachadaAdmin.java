@@ -348,10 +348,10 @@ public class FachadaAdmin {
 	 */
 	public Ejemplar nuevoEjemplar() {
 		FachadaInvitado.getPortalInvitado().verTodasPlantas();
-		in.nextLine();
 		Ejemplar e;
 		Mensaje m;
 		boolean correcto = false;
+		in.nextLine();
 		do {
 			e = new Ejemplar();
 			System.out.print("Código de la planta del ejemplar: ");
@@ -502,8 +502,14 @@ public class FachadaAdmin {
 		}
 		System.out.println("Todos los mensajes: ");
 		System.out.println();
+		String usuario = GestionSesion.getSesion().getUsuario();
 		for (Mensaje m : mensajes) {
-			System.out.println(m);
+			System.out.println("Id del mensaje: " + m.getId());
+			System.out.println("Fecha: " + m.getFechaHora().getDayOfMonth() + "-" + m.getFechaHora().getMonthValue() + "-" + m.getFechaHora().getYear() + " Hora: " + m.getFechaHora().getHour() + ":" + m.getFechaHora().getMinute());
+			System.out.println("Mensaje: " + m.getMensaje());
+			System.out.println("Id del ejemplar: " + m.getIdEjemplar());
+			System.out.println("Usuario: " + usuario);
+			System.out.println();
 			System.out.println();
 		}
 	}
@@ -578,6 +584,7 @@ public class FachadaAdmin {
 	}
 
 	public void verMensajesEjemplar() {
+		in.nextLine();
 		FachadaPersonal.getPortalPersonal().verTodosEjemplares();
 		System.out.print("Introduce el id de un ejemplar para ver sus mensajes: ");
 		try {
@@ -587,6 +594,7 @@ public class FachadaAdmin {
 						+ controlador.getServiciosEjemplar().contarEjemplares());
 				return;
 			}
+			String usuario = GestionSesion.getSesion().getUsuario();
 			ArrayList<Mensaje> mensajes = controlador.getServiciosMensaje().verMensajesPorEjemplar(idEjemplar);
 			if (mensajes.isEmpty()) {
 				System.out.println("No se encontraron mensajes para el ejemplar");
@@ -594,7 +602,11 @@ public class FachadaAdmin {
 				System.out.println("Mensajes del ejemplar con ID: " + idEjemplar + ":");
 				System.out.println();
 				for (Mensaje m : mensajes) {
-					System.out.println(m);
+					System.out.println("Id del mensaje: " + m.getId());
+					System.out.println("Fecha: " + m.getFechaHora().getDayOfMonth() + "-" + m.getFechaHora().getMonthValue() + "-" + m.getFechaHora().getYear() + " Hora: " + m.getFechaHora().getHour() + ":" + m.getFechaHora().getMinute());
+					System.out.println("Mensaje: " + m.getMensaje());
+					System.out.println("Id del ejemplar: " + m.getIdEjemplar());
+					System.out.println("Usuario: " + usuario);
 					System.out.println();
 				}
 			}

@@ -222,6 +222,7 @@ public class FachadaPersonal {
 					System.out.println("No hay ejemplares para la planta con código: " + codigo);
 				} else {
 					System.out.println("Ejemplares con el código " + codigo + ":");
+					System.out.println();
 					for (Ejemplar e : ejemplares) {
 						System.out.println(e);
 						System.out.println();
@@ -270,6 +271,7 @@ public class FachadaPersonal {
 				System.out.println("El código de la planta no es válido.");
 				return;
 			}
+			String usuario = GestionSesion.getSesion().getUsuario();
 			boolean existe = controlador.getServiciosPlanta().codigoExistente(codigo);
 			if (existe) {
 				ArrayList<Mensaje> mensajes = controlador.getServiciosMensaje().verMensajesPorCodigoPlanta(codigo);
@@ -279,7 +281,12 @@ public class FachadaPersonal {
 					System.out.println("Mensajes para la planta con el código " + codigo);
 					System.out.println();
 					for (Mensaje m : mensajes) {
-						System.out.println(m);
+						System.out.println("Id del mensaje: " + m.getId());
+						System.out.println("Fecha: " + m.getFechaHora().getDayOfMonth() + "-" + m.getFechaHora().getMonthValue() + "-" + m.getFechaHora().getYear() + " Hora: " + m.getFechaHora().getHour() + ":" + m.getFechaHora().getMinute());
+						System.out.println("Mensaje: " + m.getMensaje());
+						System.out.println("Id del ejemplar: " + m.getIdEjemplar());
+						System.out.println("Usuario: " + usuario);
+						System.out.println();
 						System.out.println();
 					}
 				}

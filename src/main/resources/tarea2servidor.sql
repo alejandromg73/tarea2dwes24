@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 10-11-2024 a las 16:23:35
+-- Tiempo de generación: 14-12-2024 a las 12:32:06
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,12 +42,8 @@ CREATE TABLE `credenciales` (
 
 INSERT INTO `credenciales` (`id`, `usuario`, `password`, `idPersona`) VALUES
 (1, 'admin', 'admin', 0),
-(2, 'alejandro', 'alejandro', 2),
-(4, 'luis', 'luis', 3),
-(5, 'pepe', 'pepe', 4),
-(6, 'antonio', 'antonio.', 5),
-(7, 'nerea', 'nereanerea.', 6),
-(8, 'hugo', 'hugohugo.', 7);
+(11, 'alejandromg73', 'alejandromg73.', 10),
+(12, 'luisdbb99', 'luisdbb99.', 11);
 
 -- --------------------------------------------------------
 
@@ -66,13 +62,9 @@ CREATE TABLE `ejemplares` (
 --
 
 INSERT INTO `ejemplares` (`id`, `nombre`, `id_planta`) VALUES
-(1, 'ROSA_1', 'ROSA'),
-(2, 'GIRASOL_2', 'GIRASOL'),
-(3, 'HIEDRA_3', 'HIEDRA'),
-(4, 'HIEDRA_4', 'HIEDRA'),
-(5, 'ROSA_5', 'ROSA'),
-(6, 'TULIPAN_6', 'TULIPAN'),
-(7, 'LAVANDA_7', 'LAVANDA');
+(1, 'CALA_1', 'CALA'),
+(2, 'ROSA_2', 'ROSA'),
+(3, 'LAVANDA_3', 'LAVANDA');
 
 -- --------------------------------------------------------
 
@@ -93,16 +85,10 @@ CREATE TABLE `mensajes` (
 --
 
 INSERT INTO `mensajes` (`id`, `fechahora`, `mensaje`, `idejemplar`, `idpersona`) VALUES
-(1, '2024-11-08 10:43:00', 'Añadido el ejemplar 1', 1, 0),
-(2, '2024-11-08 18:03:11', 'Trabajos de mantenimiento del ejemplar ', 1, 0),
-(3, '2024-11-08 18:07:06', 'Cambio de habitat del ejemplar ', 1, 2),
-(4, '2024-11-08 19:00:24', 'Añadido el ejemplar GIRASOL_2', 2, 0),
-(5, '2024-11-08 19:02:23', 'Añadido el ejemplar HIEDRA_3', 3, 0),
-(6, '2024-11-08 19:02:29', 'Añadido el ejemplar HIEDRA_4', 4, 0),
-(7, '2024-11-08 19:02:34', 'Añadido el ejemplar ROSA_5', 5, 0),
-(8, '2024-11-08 19:02:45', 'Añadido el ejemplar TULIPAN_6', 6, 0),
-(9, '2024-11-09 10:20:05', 'Cambio de tierra y abono', 2, 2),
-(10, '2024-11-10 15:29:05', 'Añadido el ejemplar LAVANDA_7', 7, 0);
+(25, '2024-12-14 12:30:00', 'CAMBIO DE HABITAT', 3, 10),
+(26, '2024-12-14 12:30:45', 'MEDICACIÓN ADMINISTRADA', 1, 10),
+(27, '2024-12-14 12:30:58', 'CURADO COMPLETAMENTE', 1, 10),
+(28, '2024-12-14 12:31:03', 'ENFERMO', 2, 10);
 
 -- --------------------------------------------------------
 
@@ -122,12 +108,8 @@ CREATE TABLE `personas` (
 
 INSERT INTO `personas` (`id`, `nombre`, `email`) VALUES
 (0, 'admin', 'admin@admin.com'),
-(2, 'Alejandro', 'alejandromg73@educastur.es'),
-(3, 'Luis', 'luis@educastur.es'),
-(4, 'Pepe', 'pepe@gmail.com'),
-(5, 'Antonio', 'antonio@gmail.com'),
-(6, 'Nerea', 'nerea@educastur.es'),
-(7, 'Hugo', 'hugo@educastur.es');
+(10, 'Alejandro', 'alejandromg73@educastur.es'),
+(11, 'Luis', 'luisdbb@educastur.es');
 
 -- --------------------------------------------------------
 
@@ -147,12 +129,12 @@ CREATE TABLE `plantas` (
 
 INSERT INTO `plantas` (`codigo`, `nombrecomun`, `nombrecientifico`) VALUES
 ('CALA', 'Cala', 'Zantedeschia aethiopica'),
-('GIRASOL', 'Girasol', 'Helianthus annuus'),
-('HIEDRA', 'Hiedra', 'Hedera Helix'),
-('LAVANDA', 'Lavanda', 'Lavandulas'),
-('MARGARITA', 'Margarita', 'Bellis perennis'),
-('ROSA', 'Rosa', 'Rosa Rosae'),
-('TULIPAN', 'TULIPAN', 'Tulipa sp');
+('HIEDRA', 'Hiedra', 'Hedera'),
+('LAVANDA', 'Lavanda', 'Lavandula'),
+('MANZANO', 'Manzano', 'Malus domestica'),
+('MARGARITA', 'Margarita', 'Bellis Perennis'),
+('ROSA', 'Rosa', 'Rosaceae'),
+('TULIPAN', 'Tulipan', 'Tulipa');
 
 --
 -- Índices para tablas volcadas
@@ -202,25 +184,25 @@ ALTER TABLE `plantas`
 -- AUTO_INCREMENT de la tabla `credenciales`
 --
 ALTER TABLE `credenciales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `ejemplares`
 --
 ALTER TABLE `ejemplares`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restricciones para tablas volcadas
