@@ -242,13 +242,18 @@ public class FachadaPersonal {
 		try {
 			long idPersona = in.nextLong();
 			ArrayList<Mensaje> mensajes = controlador.getServiciosMensaje().verMensajesPorPersona(idPersona);
+			String usuario = GestionSesion.getSesion().getUsuario();
 			if (mensajes.isEmpty()) {
 				System.out.println("No se encontraron mensajes para la persona: " + idPersona);
 			} else {
 				System.out.println("Mensajes:");
 				System.out.println();
 				for (Mensaje m : mensajes) {
-					System.out.println(m);
+					System.out.println("Id del mensaje: " + m.getId());
+					System.out.println("Fecha: " + m.getFechaHora().getDayOfMonth() + "-" + m.getFechaHora().getMonthValue() + "-" + m.getFechaHora().getYear() + " Hora: " + m.getFechaHora().getHour() + ":" + m.getFechaHora().getMinute());
+					System.out.println("Mensaje: " + m.getMensaje());
+					System.out.println("Id del ejemplar: " + m.getIdEjemplar());
+					System.out.println("Usuario: " + usuario + "Tipo de perfil: ("+GestionSesion.getSesion().getPerfilUsuario()+")");
 					System.out.println();
 				}
 			}
@@ -285,8 +290,7 @@ public class FachadaPersonal {
 						System.out.println("Fecha: " + m.getFechaHora().getDayOfMonth() + "-" + m.getFechaHora().getMonthValue() + "-" + m.getFechaHora().getYear() + " Hora: " + m.getFechaHora().getHour() + ":" + m.getFechaHora().getMinute());
 						System.out.println("Mensaje: " + m.getMensaje());
 						System.out.println("Id del ejemplar: " + m.getIdEjemplar());
-						System.out.println("Usuario: " + usuario);
-						System.out.println();
+						System.out.println("Usuario: " + usuario + "Tipo de perfil: ("+GestionSesion.getSesion().getPerfilUsuario()+")");
 						System.out.println();
 					}
 				}
@@ -325,17 +329,24 @@ public class FachadaPersonal {
 				System.out.println("Formato de fecha no válido.");
 			}
 		} while (fechaFin == null);
+		String usuario = GestionSesion.getSesion().getUsuario();
 		ArrayList<Mensaje> mensajes = controlador.getServiciosMensaje().verMensajesFecha(fechaInicio, fechaFin);
 		if (mensajes.isEmpty()) {
 			System.out.println("No se encontraron mensajes en el rango de fechas proporcionado.");
 		} else {
 			System.out.println("Mensajes encontrados:");
 			System.out.println();
-			for (Mensaje m : mensajes) {
-				System.out.println(m);
-				System.out.println();
+				for (Mensaje m : mensajes) {
+					System.out.println("Id del mensaje: " + m.getId());
+					System.out.println("Fecha: " + m.getFechaHora().getDayOfMonth() + "-" + m.getFechaHora().getMonthValue() + "-" + m.getFechaHora().getYear() + " Hora: " + m.getFechaHora().getHour() + ":" + m.getFechaHora().getMinute());
+					System.out.println("Mensaje: " + m.getMensaje());
+					System.out.println("Id del ejemplar: " + m.getIdEjemplar());
+					System.out.println("Usuario: " + usuario + "Tipo de perfil: ("+GestionSesion.getSesion().getPerfilUsuario()+")");
+					System.out.println();
+				}
 
 			}
 		}
-	}
+	
+	
 }

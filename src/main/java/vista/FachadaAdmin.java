@@ -503,16 +503,16 @@ public class FachadaAdmin {
 		System.out.println("Todos los mensajes: ");
 		System.out.println();
 		String usuario = GestionSesion.getSesion().getUsuario();
-		for (Mensaje m : mensajes) {
-			System.out.println("Id del mensaje: " + m.getId());
-			System.out.println("Fecha: " + m.getFechaHora().getDayOfMonth() + "-" + m.getFechaHora().getMonthValue() + "-" + m.getFechaHora().getYear() + " Hora: " + m.getFechaHora().getHour() + ":" + m.getFechaHora().getMinute());
-			System.out.println("Mensaje: " + m.getMensaje());
-			System.out.println("Id del ejemplar: " + m.getIdEjemplar());
-			System.out.println("Usuario: " + usuario);
-			System.out.println();
-			System.out.println();
+			for (Mensaje m : mensajes) {
+				System.out.println("Id del mensaje: " + m.getId());
+				System.out.println("Fecha: " + m.getFechaHora().getDayOfMonth() + "-" + m.getFechaHora().getMonthValue() + "-" + m.getFechaHora().getYear() + " Hora: " + m.getFechaHora().getHour() + ":" + m.getFechaHora().getMinute());
+				System.out.println("Mensaje: " + m.getMensaje());
+				System.out.println("Id del ejemplar: " + m.getIdEjemplar());
+				System.out.println("Usuario: " + usuario + "Tipo de perfil: ("+GestionSesion.getSesion().getPerfilUsuario()+")");
+				System.out.println();
+			}
 		}
-	}
+	
 
 	public void modificarNombreComun() {
 		FachadaInvitado.getPortalInvitado().verTodasPlantas();
@@ -606,7 +606,7 @@ public class FachadaAdmin {
 					System.out.println("Fecha: " + m.getFechaHora().getDayOfMonth() + "-" + m.getFechaHora().getMonthValue() + "-" + m.getFechaHora().getYear() + " Hora: " + m.getFechaHora().getHour() + ":" + m.getFechaHora().getMinute());
 					System.out.println("Mensaje: " + m.getMensaje());
 					System.out.println("Id del ejemplar: " + m.getIdEjemplar());
-					System.out.println("Usuario: " + usuario);
+					System.out.println("Usuario: " + usuario + "Tipo de perfil: ("+GestionSesion.getSesion().getPerfilUsuario()+")");
 					System.out.println();
 				}
 			}
