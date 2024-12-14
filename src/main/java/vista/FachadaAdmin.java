@@ -6,6 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import control.Controlador;
+import control.GestionSesion;
 import modelo.Credenciales;
 import modelo.Ejemplar;
 import modelo.Mensaje;
@@ -60,7 +61,7 @@ public class FachadaAdmin {
 					menuAdminPersonas();
 					break;
 				case 5:
-					Controlador.getServicios().cerrarSesion();
+					GestionSesion.getSesion().cerrarSesion();
 					return;
 				}
 			} catch (InputMismatchException e) {
@@ -375,7 +376,7 @@ public class FachadaAdmin {
 				controlador.getServiciosEjemplar().cambiarNombre(e.getId(), e.getNombre());
 				String mensaje = "Añadido el ejemplar " + e.getNombre();
 				LocalDateTime fechaHora = LocalDateTime.now();
-				String usuarioAutenticado = controlador.getUsuarioAutenticado();
+				String usuarioAutenticado = GestionSesion.getSesion().getUsuario();
 				long idUsuario = controlador.getServiciosPersona().IdUsuarioAutenticado(usuarioAutenticado);
 				// A la vez que la insercción del ejemplar, se genera un mensaje
 				m = new Mensaje(fechaHora, mensaje, idEjemplar, idUsuario);

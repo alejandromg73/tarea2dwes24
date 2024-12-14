@@ -73,10 +73,10 @@ public class Mensaje {
 	public String toString() {
 		String ret = "";
 		ret += "Id de mensaje: " + this.id;
-		ret += "\nFecha y hora: " + this.fechaHora;
+		ret += "\nFecha: "+ this.fechaHora.getDayOfMonth() + "-" + this.getFechaHora().getMonthValue() + "-" + this.getFechaHora().getYear() + " Hora: " + this.getFechaHora().getHour() + ":" + this.getFechaHora().getMinute();
 		ret += "\nMensaje: " + this.mensaje;
-		ret += "\nEjemplar: " + this.idEjemplar;
-		ret += "\nPersona: " + this.idPersona;
+		ret += "\nId del ejemplar: " + this.idEjemplar;
+		ret += "\nId de la persona: " + this.idPersona;
 		return ret;
 	}
 	

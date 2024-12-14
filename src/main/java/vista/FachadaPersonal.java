@@ -8,6 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import control.Controlador;
+import control.GestionSesion;
 import modelo.Ejemplar;
 import modelo.Mensaje;
 
@@ -56,7 +57,7 @@ public class FachadaPersonal {
 					menuPersonalMensajes();
 					break;
 				case 4:
-					Controlador.getServicios().cerrarSesion();
+					GestionSesion.getSesion().cerrarSesion();;
 					return;
 
 				}
@@ -188,7 +189,7 @@ public class FachadaPersonal {
 							System.out.println("Formato de mensaje no válido.");
 						} else {
 							mensajeValido = true;
-							String usuarioAutenticado = controlador.getUsuarioAutenticado();
+							String usuarioAutenticado = GestionSesion.getSesion().getUsuario();
 							long idUsuario = controlador.getServiciosPersona().IdUsuarioAutenticado(usuarioAutenticado);
 							nuevoMensaje = new Mensaje(LocalDateTime.now(), mensaje, idEjemplar, idUsuario);
 							if (controlador.getServiciosMensaje().insertar(nuevoMensaje) > 0) {

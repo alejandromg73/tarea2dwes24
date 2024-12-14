@@ -5,6 +5,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import control.Controlador;
+import control.GestionSesion;
+import control.PerfilUsuario;
 import modelo.Planta;
 
 public class FachadaInvitado {
@@ -65,33 +67,38 @@ public class FachadaInvitado {
 	 * a la de personal (si el login falla, te devuelve al menú de invitado)
 	 */
 	public void login() {
-		in.nextLine();
-		System.out.print("Introduce usuario: ");
-		String usuario = in.nextLine();
-		System.out.print("Introduce contraseña: ");
-		String contraseña = in.nextLine();
-		try {
-			boolean autenticar = controlador.getServiciosCredenciales().autenticar(usuario, contraseña);
-			if (autenticar) {
-				System.out.println("Has iniciado sesión como " + usuario);
-				controlador.setUsuarioAutenticado(usuario);
-				if (usuario.equalsIgnoreCase("admin") && contraseña.equalsIgnoreCase("admin")) {
-					System.out.println("Eres el usuario administrador");
-					FachadaAdmin.getPortalAdmin().menuAdmin();
-				} else {
-					System.out.println("Eres un usuario del personal del vivero");
-					FachadaPersonal.getPortalPersonal().menuPersonal();
-				}
-			} else {
-				System.out.println("Usuario o contraseña incorrectos.");
-				return;
-			}
-		} catch (Exception e) {
-			System.out.println("No se ha podido iniciar sesión: " + e.getMessage());
-			return;
-		}
+	    in.nextLine(); 
+	    System.out.print("Introduce usuario: ");
+	    String usuario = in.nextLine().trim();
+	    System.out.print("Introduce contraseña: ");
+	    String contraseña = in.nextLine().trim();
+	    try {
+	        boolean autenticar = controlador.getServiciosCredenciales().autenticar(usuario, contraseña);
+	        if (autenticar) {
+	            System.out.println("Has iniciado sesión como: " + usuario);
+	            long id = controlador.getServiciosPersona().IdUsuarioAutenticado(usuario);
+	            PerfilUsuario perfil;
+	            if ("admin".equalsIgnoreCase(usuario)) {
+	                perfil = PerfilUsuario.ADMIN;
+	            } else {
+	                perfil = PerfilUsuario.PERSONAL;
+	            }
+	            GestionSesion.getSesion().iniciarSesion(id, usuario, perfil);
+	            if (perfil == PerfilUsuario.ADMIN) {
+	                System.out.println("Eres el usuario administrador");
+	                FachadaAdmin.getPortalAdmin().menuAdmin();
+	            } else {
+	                System.out.println("Eres un usuario del personal del vivero");
+	                FachadaPersonal.getPortalPersonal().menuPersonal();
+	            }
+	        } else {
+	            System.out.println("Usuario o contraseña incorrectos");
+	        }
+	    } catch (Exception e) {
+	        System.out.println("No se ha podido iniciar sesión: " + e.getMessage());
+	    }
 	}
-
+	
 	public void verTodasPlantas() {
 		ArrayList<Planta> plantas = (ArrayList<Planta>) controlador.getServiciosPlanta().verTodos();
 		if (plantas == null || plantas.isEmpty()) {
